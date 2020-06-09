@@ -9,7 +9,7 @@ public class DTPlayer {
 
     public static void main(String [] args) throws IOException {
 
-        NetworkClient networkClient = new NetworkClient(null, "...");
+        NetworkClient networkClient = new NetworkClient("127.0.0.1", "...");
 
         int player = networkClient.getMyPlayerNumber(); // 0-3 (ACHTUNG! andere Nummerierung als beim ColorChange)
 
