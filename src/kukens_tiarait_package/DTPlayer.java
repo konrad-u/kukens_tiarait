@@ -9,29 +9,37 @@ public class DTPlayer {
 
     public static void main(String [] args) throws IOException {
 
-        NetworkClient networkClient = new NetworkClient("127.0.0.1", "...");
+        NetworkClient nC = new NetworkClient("127.0.0.1", "...");
 
-        int player = networkClient.getMyPlayerNumber(); // 0-3 (WARNING! different numbering than in ColorChange)
+        int player = nC.getMyPlayerNumber(); // 0-3 (WARNING! different numbering than in ColorChange)
 
-        while (networkClient.isAlive()) {
+        while (nC.isAlive()) {
             int botNr = 0;
             // control
-            float x = networkClient.getX(player, botNr);
-            float y = networkClient.getY(player, botNr);
+            float x = nC.getX(player, botNr);
+            float y = nC.getY(player, botNr);
 
-            networkClient.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
+            nC.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
 
-            networkClient.setMoveDirection(0, 0.1f, -0.8f);
-            networkClient.setMoveDirection(1, 0.1f, 1.8f);
-            networkClient.setMoveDirection(2, -5.1f, -0.8f);
+            nC.setMoveDirection(0, 0.1f, -0.8f);
+            nC.setMoveDirection(1, 0.1f, 1.8f);
+            nC.setMoveDirection(2, -5.1f, -0.8f);
+            printPositions(nC);
 
             ColorChange cc;
-            while ((cc = networkClient.getNextColorChange()) != null) {
+            while ((cc = nC.getNextColorChange()) != null) {
                 // integrate cc into own structure
                 //z.B.
                 //brett[cc.x][cc.y] = cc.newColor;
                 //cc.newColor; //0 = empty, 1-4 = player
             }
         }
+    }
+    
+    public static void printPositions(NetworkClient nC){
+        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 0: " + nC.getX(nC.getMyPlayerNumber(), 0) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
+        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 1: " + nC.getX(nC.getMyPlayerNumber(), 1) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
+        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 2: " + nC.getX(nC.getMyPlayerNumber(), 2) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
+        System.out.println();
     }
 }

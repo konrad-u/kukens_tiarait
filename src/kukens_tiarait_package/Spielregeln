@@ -1,0 +1,12 @@
+# Spielregeln
+
+- Drei Spieler spielen gleichzeitig in "Echtzeit".
+- Ziel des Spiels ist es, möglichst große Bereiche der Spielwelt durch "Überfahren" mit eigenen Bots mit der eigenen Farbe zu färben.
+- Die Spielwelt enthält Hindernisse, die die Bewegungsfreiheit beschränken.
+- Jeder Spieler hat Kontrolle über drei Bots (nummeriert 0, 1, 2).
+- **Bot 0** (**Pyramide auf der Spitze**) hat Geschwindigkeit 110% und löscht alle (auch eigene) überfahrene Felder
+- **Bot 1** (**Quader**) hat Geschwindigkeit 100% und färbt überfahrene Felder in eigener Farbe
+- **Bot 2** (**Pyramide**) hat Geschwindigkeit 67% und färbt neben seiner Position auch das nächste Nachbarfeld
+- Die Geschwindigkeit der Bots ist festgelegt und kann nicht gebremst werden. Steuerung erfolgt ausschließlich durch Lenken (Richtungsvektor beliebiger Länge).
+- Bots blockieren sich nicht gegenseitig, aber es kann die Farbe anderer Spieler übermalt werden.
+- Das Spiel endet mit Ablauf des Zeitlimits. Gewonnen hat der Spieler mit der maximalen Punktzahl. Haben mehrere Spieler die maximale Punktzahl, endet das Spiel unentschieden.
