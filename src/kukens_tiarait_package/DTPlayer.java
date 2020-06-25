@@ -24,7 +24,7 @@ public class DTPlayer {
             nC.setMoveDirection(0, 0.1f, -0.8f);
             nC.setMoveDirection(1, 0.1f, 1.8f);
             nC.setMoveDirection(2, -5.1f, -0.8f);
-            printPositions(nC);
+            printPositions(player, nC);
 
             ColorChange cc;
             while ((cc = nC.getNextColorChange()) != null) {
@@ -36,10 +36,11 @@ public class DTPlayer {
         }
     }
     
-    public static void printPositions(NetworkClient nC){
-        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 0: " + nC.getX(nC.getMyPlayerNumber(), 0) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
-        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 1: " + nC.getX(nC.getMyPlayerNumber(), 1) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
-        System.out.println("Player " + nC.getMyPlayerNumber() + " Bot 2: " + nC.getX(nC.getMyPlayerNumber(), 2) + "," + nC.getY(nC.getMyPlayerNumber(), 0));
+    public static void printPositions(int player, NetworkClient nC){
+        System.out.println("Player " + player + " Bot 0: " + nC.getX(player, 0) + "," + nC.getY(player, 0));
+        System.out.println("Player " + player + " Bot 1: " + nC.getX(player, 1) + "," + nC.getY(player, 0));
+        System.out.println("Player " + player + " Bot 2: " + nC.getX(player, 2) + "," + nC.getY(player, 0));
         System.out.println();
     }
+
 }
