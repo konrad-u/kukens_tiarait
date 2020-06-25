@@ -14,10 +14,10 @@ public class DTPlayer {
         int player = nC.getMyPlayerNumber(); // 0-3 (WARNING! different numbering than in ColorChange)
 
         while (nC.isAlive()) {
-            int botNr = 0;
+            //int botNr = 0;
             // control
-            float x = nC.getX(player, botNr);
-            float y = nC.getY(player, botNr);
+            //float x = nC.getX(player, botNr);
+            //float y = nC.getY(player, botNr);
 
             nC.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
 
@@ -27,7 +27,9 @@ public class DTPlayer {
             printPositions(player, nC);
 
             ColorChange cc;
-            while ((cc = nC.getNextColorChange()) != null) {
+            cc = nC.getNextColorChange();
+            if (cc != null) {
+                System.out.println("a color change happened at " + cc.x + "," + cc.y + " by player " + cc.newColor);
                 // integrate cc into own structure
                 //z.B.
                 //brett[cc.x][cc.y] = cc.newColor;
@@ -37,9 +39,9 @@ public class DTPlayer {
     }
     
     public static void printPositions(int player, NetworkClient nC){
-        System.out.println("Player " + player + " Bot 0: " + nC.getX(player, 0) + "," + nC.getY(player, 0));
-        System.out.println("Player " + player + " Bot 1: " + nC.getX(player, 1) + "," + nC.getY(player, 0));
-        System.out.println("Player " + player + " Bot 2: " + nC.getX(player, 2) + "," + nC.getY(player, 0));
+        for(int i = 0; i < 3; i++) {
+            System.out.println("Player " + player + " Bot: " + i + " is at " + (int) nC.getX(player, i) + "," + nC.getY(player, i));
+        }
         System.out.println();
     }
 

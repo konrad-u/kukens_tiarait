@@ -13,27 +13,29 @@
 
 ## Essential methods
 
-- **void** setMoveDirection (**int** botNr, **float** xDirection, **float** yDirection)
+- **void** `setMoveDirection (int botNr, float xDirection, float yDirection)`
 
-- **float** getX (**int** playerNumber, **int botNr**)
+- **float** `getX (int playerNumber, int botNr)`
 
-- **float** getY (**int** playerNumber, **int botNr**)
+- **float** `getY (int playerNumber, int botNr)`
 
     - *should be combined and return an object representing the bot at that position*
     
-- **boolean** isWall(**int** x, **int** y)
+- **boolean** `isWall (int x, int y)`
 
-- **ColorChange** getNextColorChange() *?*
+- **ColorChange** `getNextColorChange()` *(?)*
+    - used to color the ground?
 
-- **boolean** isAlive() *alive as long as timer is counting down?*
+- **boolean** `isAlive()` 
+    - *alive as long as timer is counting down?*
 
 
 ## Sequence of action: 
 
-**every step involves pre-writing the appropriate tests, and only passing these per step**
+Always write the test code before production code. Only write enough production code to fail the test code. 
 
 1. Imitate game by tracking all bots of all players
-    1. model gameboard
+    1. model game board
     2. model bots
     3. map server content
         1. obstacles
@@ -41,4 +43,15 @@
         3. time
     4. I can track everything on server?    
     
-2. 
+2. Develop Strategies for each Bot
+
+| Bot | Symbol | Speed | Skill | Strategy Suggestions? |
+|---|---|---|---|---|
+| 0 | Pyramid on head | 110% | erases all color | follow enemy with most color |
+| 1 | Rectangle | 100% | colors in own color  | go opposite of enemies, or follow bot 0? |
+| 2 | Pyramid | 67% | colors own + neighboring field | go opposite direction of enemies? |
+
+| Lecture | Concepts | How to use? |
+|---|---|---|
+| Clustering  | grouping, identifying outliers, V1: Bereiche vorgegeben, V2: Datenpunkte zusammenfassen |   |
+| Kooperative Wegesuche  |   |   |
