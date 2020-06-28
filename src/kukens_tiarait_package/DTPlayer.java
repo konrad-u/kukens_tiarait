@@ -13,6 +13,9 @@ public class DTPlayer {
 
         int player = nC.getMyPlayerNumber(); // 0-3 (WARNING! different numbering than in ColorChange)
 
+        GameBoard myGameBoard = new GameBoard(nC);
+        myGameBoard.printBoard();
+
         while (nC.isAlive()) {
             //int botNr = 0;
             // control
@@ -24,12 +27,14 @@ public class DTPlayer {
             nC.setMoveDirection(0, 0.1f, -0.8f);
             nC.setMoveDirection(1, 0.1f, 1.8f);
             nC.setMoveDirection(2, -5.1f, -0.8f);
-            printPositions(player, nC);
+            //printPositions(player, nC);
 
             ColorChange cc;
             cc = nC.getNextColorChange();
             while (cc != null) {
                 System.out.println("a color change happened at " + cc.x + "," + cc.y + " by player " + cc.newColor);
+                myGameBoard.updateBoard(cc);
+                myGameBoard.printBoard();
                 // integrate cc into own structure
                 //z.B.
                 //brett[cc.x][cc.y] = cc.newColor;

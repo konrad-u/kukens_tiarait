@@ -1,0 +1,9 @@
+# Project Documentation
+
+Here I will describe the steps I took in creating my player strategies for the Tiarait bots. 
+
+## Step 0: Multirun automation
+Unlike my previous programs for the SARG player, in this project I set up a Multirun run configuration (https://plugins.jetbrains.com/plugin/7248-multirun) through which I could in a single test run multiple instances of the default player NetworkClient class, making testing significantly easier. 
+
+After setting up the project and a dummy player class, I worked out how to imitate the 
+ 

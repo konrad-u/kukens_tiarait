@@ -34,7 +34,7 @@
 
 Always write the test code before production code. Only write enough production code to fail the test code. 
 
-1. Imitate game by tracking all bots of all players
+1. **Imitate game by tracking all bots of all players**
     1. model game board
     2. model bots
     3. map server content
@@ -43,7 +43,11 @@ Always write the test code before production code. Only write enough production 
         3. time
     4. I can track everything on server?    
     
-2. Develop Strategies for each Bot
+2. **Develop Strategies for each Bot**
+    1. Pathfinding Algorithms (Dijkstra's algorithm, )
+    
+        https://www.baeldung.com/java-a-star-pathfinding
+        
 
 | Bot | Symbol | Speed | Skill | Strategy Suggestions? |
 |---|---|---|---|---|
@@ -55,3 +59,10 @@ Always write the test code before production code. Only write enough production 
 |---|---|---|
 | Clustering  | grouping, identifying outliers, V1: Bereiche vorgegeben, V2: Datenpunkte zusammenfassen |   |
 | Kooperative Wegesuche  |   |   |
+
+
+
+## Mindestanforderungen
+
+- Vorausschauende Bewegung (muss nicht A* sein, aber auch kein ad-hoc-Verfahren nur über Nachbarschaft)
+- Unterschiedliche Nutzung der drei Bots (nicht alle identisch steuern, idealerweise - aber nicht zwingend kooperativ unter Ausnutzung der einzelnen Besonderheiten)
