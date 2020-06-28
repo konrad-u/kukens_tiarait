@@ -38,10 +38,6 @@ public class DTPlayer {
                 myGameBoard.updateBoard(cc);
                 myGameBoard.printBoard();
                 cc = null;
-                // integrate cc into own structure
-                //z.B.
-                //brett[cc.x][cc.y] = cc.newColor;
-                //cc.newColor; //0 = empty, 1-4 = player
             }
         }
     }
