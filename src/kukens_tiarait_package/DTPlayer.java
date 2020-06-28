@@ -28,7 +28,7 @@ public class DTPlayer {
 
             ColorChange cc;
             cc = nC.getNextColorChange();
-            if (cc != null) {
+            while (cc != null) {
                 System.out.println("a color change happened at " + cc.x + "," + cc.y + " by player " + cc.newColor);
                 // integrate cc into own structure
                 //z.B.
@@ -40,7 +40,7 @@ public class DTPlayer {
     
     public static void printPositions(int player, NetworkClient nC){
         for(int i = 0; i < 3; i++) {
-            System.out.println("Player " + player + " Bot: " + i + " is at " + (int) nC.getX(player, i) + "," + nC.getY(player, i));
+            System.out.println("Player " + player + " Bot: " + i + " is at " + (int) nC.getX(player, i) + "," + (int) nC.getY(player, i));
         }
         System.out.println();
     }
