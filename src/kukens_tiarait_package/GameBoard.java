@@ -16,7 +16,7 @@ import lenz.htw.tiarait.net.NetworkClient;
 import java.awt.*;
 
 public class GameBoard {
-    char[][] boardFields = new char[32][32];
+    int[][] boardFields = new int[32][32];
     NetworkClient nC;
 
     int[] playerScores = new int[4];
@@ -27,10 +27,10 @@ public class GameBoard {
         for(int i = 0; i < 32; i++){
             for(int j = 0; j < 32; j++){
                 if(nC.isWall(i,j)){
-                    boardFields[i][j] = '*';
+                    boardFields[i][j] = 5;
                 }
                 else{
-                    boardFields[i][j] = ' ';
+                    boardFields[i][j] = 0;
                 }
             }
         }
@@ -42,58 +42,51 @@ public class GameBoard {
         for(int i = 31; i >= 0; i--) {
             for (int j = 0; j < 32; j++) {
                 System.out.print(" ");
-                System.out.print(boardFields[j][i]);
+                if(boardFields[j][i] == 5) {
+                    System.out.print('*');
+                }
+                else if(boardFields[j][i] == 0){
+                    System.out.print(" ");
+                }
+                else{
+                    System.out.print(boardFields[j][i]);
+                }
                 System.out.print(" ");
             }
             System.out.println();
         }
         for(int k = 0; k < playerScores.length; k++){
-            System.out.println("Player: " + k+1 + " Score: " + playerScores[k]);
+            System.out.println("Player: " + (k+1) + " Score: " + playerScores[k]);
         }
 
     }
 
     public void updateBoard(ColorChange cc){
-        char newFieldValue = (char)(cc.newColor + '0');
-        int boardFieldChar = Character.getNumericValue(boardFields[cc.x][cc.y]);
+        boardFields[cc.x][cc.y] = cc.newColor;
+        updateScores();
+    }
 
-        System.out.println("..............." + cc.newColor);
-
-        if(cc.newColor < 1 || boardFieldChar+1 != cc.newColor){
-            playerScores[boardFieldChar]--;
-            boardFields[cc.x][cc.y] = (char)0 + '0';
+    public void updateScores(){
+        for(int k = 0; k < playerScores.length; k++){
+            playerScores[k] = 0;
         }
-        else{
-            playerScores[cc.newColor-1]++;
-            boardFields[cc.x][cc.y] = newFieldValue;
+        for(int i = 0; i < 32; i++) {
+            for (int j = 0; j < 32; j++) {
+                switch (boardFields[i][j]){
+                    case(1):
+                        playerScores[0]++;
+                        break;
+                    case(2):
+                        playerScores[1]++;
+                        break;
+                    case(3):
+                        playerScores[2]++;
+                        break;
+                    case(4):
+                        playerScores[3]++;
+                        break;
+                }
+            }
         }
-
-        /*
-        switch(newFieldValue){
-            case('0'):
-                playerScores[0]--;
-                boardFields[cc.x][cc.y] = newFieldValue;
-
-                break;
-            case('1'):
-
-                break;
-            case('2'):
-
-                break;
-
-            case('3'):
-
-                break;
-
-        }
-        if(newFieldValue == '0'){
-            newFieldValue = ' ';
-        }
-        else {
-            boardFields[cc.x][cc.y] = newFieldValue;
-        }
-
-         */
     }
 }
