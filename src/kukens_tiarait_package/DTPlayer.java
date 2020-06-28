@@ -31,10 +31,13 @@ public class DTPlayer {
 
             ColorChange cc;
             cc = nC.getNextColorChange();
+
             while (cc != null) {
+                //cc = nC.getNextColorChange();
                 System.out.println("a color change happened at " + cc.x + "," + cc.y + " by player " + cc.newColor);
                 myGameBoard.updateBoard(cc);
                 myGameBoard.printBoard();
+                cc = null;
                 // integrate cc into own structure
                 //z.B.
                 //brett[cc.x][cc.y] = cc.newColor;

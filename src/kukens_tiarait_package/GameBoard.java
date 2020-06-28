@@ -45,6 +45,13 @@ public class GameBoard {
     }
 
     public void updateBoard(ColorChange cc){
-        boardFields[cc.x][cc.y] = (char) cc.newColor;
+        char newFieldValue = (char)(cc.newColor + '0');
+        if(newFieldValue == '0'){
+            newFieldValue = ' ';
+        }
+        else {
+            boardFields[cc.x][cc.y] = newFieldValue;
+        }
+        System.out.println("the new char is " + cc.newColor);
     }
 }
