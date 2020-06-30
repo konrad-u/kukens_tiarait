@@ -9,6 +9,15 @@ After setting up the project and a dummy player class, I set up the GameBoard cl
 
 Once I had the test configuration and game tracking setup, I adjusted the GameBoard class to contain a 2D Array of BoardFields; this would allow me to save the fieldValue and coordinates of the BoardField, to be able to use them in later calculations *e.g. for pathfinding distances, to calculate each player's current score etc.). 
 
-I set up a Boardfield Class with 3 integers, an x, a y and a fieldValue, which would be used to save the 
+I set up a Boardfield Class with 3 integers, an x, a y and a fieldValue, which would be used to save the status of the field (either empty, a wall or painted by a player), encoded in an integer with a value 0-5.
+
+## Step 1: Abstract Bot Class
+
+To outline the general behaviour of any of the bots before developing specific strategies for each bot to follow, I outlined an AbstractBot class similarly to an interface to prescribe general fields and methods that each bot class would need to formulate a strategy, regardless of skill. The methods updateBotGoal() and setDirection(), as well as the constructor of the BotDirection inner class, were left empty for implementation in the concrete bot classes. 
+
+I here started considering how I would want to go about making and using strategies, as I considered either maintaining a single goal throughout the game, updating it at regular intervals by reassessing the game board, or creating smaller goals, and, upon reaching them, creating new goals. 
+I decided to go with the latter option, figuring that for testing and strategy development starting with smaller goals, and, once some set of strategies was developed, to then experiment with more sophisticated options. 
+
+
 
  

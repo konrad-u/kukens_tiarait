@@ -24,7 +24,7 @@ public class DTPlayer {
 
             nC.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
 
-            nC.setMoveDirection(0, 0.1f, -0.8f);
+            nC.setMoveDirection(0, 0.5f, -0.5f);
             nC.setMoveDirection(1, 0.1f, 1.8f);
             nC.setMoveDirection(2, -5.1f, -0.8f);
             //printPositions(player, nC);
@@ -34,7 +34,10 @@ public class DTPlayer {
 
             while (cc != null) {
                 //cc = nC.getNextColorChange();
-                System.out.println("a color change happened at " + cc.x + "," + cc.y + " by player " + cc.newColor);
+                System.out.println("a color change happened at "
+                        + cc.x + ","
+                        + cc.y + " by player "
+                        + cc.newColor);
                 myGameBoard.updateBoard(cc);
                 myGameBoard.printBoard();
                 cc = null;

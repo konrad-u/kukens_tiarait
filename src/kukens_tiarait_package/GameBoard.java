@@ -4,16 +4,13 @@ package kukens_tiarait_package;
 /*
 Class used to imitate the gameBoard.
 
-boardFields copies gameBoard.
+boardFields copies gameBoard;
+each BoardField saves x, y and fieldValue, which is 0-5
 int[] pXScore count player scores, with the position indicating playerNumber.
-
-
  */
 
 import lenz.htw.tiarait.ColorChange;
 import lenz.htw.tiarait.net.NetworkClient;
-
-import java.awt.*;
 
 public class GameBoard {
     BoardField[][] boardFields = new BoardField[32][32];
@@ -54,7 +51,10 @@ public class GameBoard {
             System.out.println();
         }
         for(int k = 0; k < playerScores.length; k++){
-            System.out.println("Player: " + (k+1) + " Score: " + playerScores[k]);
+            System.out.println("Player: "
+                    + (k+1)
+                    + " Score: "
+                    + playerScores[k]);
         }
 
     }
