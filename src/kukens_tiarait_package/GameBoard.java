@@ -16,7 +16,7 @@ import lenz.htw.tiarait.net.NetworkClient;
 import java.awt.*;
 
 public class GameBoard {
-    int[][] boardFields = new int[32][32];
+    BoardField[][] boardFields = new BoardField[32][32];
     NetworkClient nC;
 
     int[] playerScores = new int[4];
@@ -26,11 +26,9 @@ public class GameBoard {
 
         for(int i = 0; i < 32; i++){
             for(int j = 0; j < 32; j++){
+                boardFields[i][j] = new BoardField(i,j,0);
                 if(nC.isWall(i,j)){
-                    boardFields[i][j] = 5;
-                }
-                else{
-                    boardFields[i][j] = 0;
+                    boardFields[i][j].setFieldValue(5);
                 }
             }
         }
@@ -42,14 +40,14 @@ public class GameBoard {
         for(int i = 31; i >= 0; i--) {
             for (int j = 0; j < 32; j++) {
                 System.out.print(" ");
-                if(boardFields[j][i] == 5) {
+                if(boardFields[j][i].getFieldValue() == 5) {
                     System.out.print('*');
                 }
-                else if(boardFields[j][i] == 0){
+                else if(boardFields[j][i].getFieldValue() == 0){
                     System.out.print(" ");
                 }
                 else{
-                    System.out.print(boardFields[j][i]);
+                    System.out.print(boardFields[j][i].getFieldValue());
                 }
                 System.out.print(" ");
             }
@@ -62,7 +60,7 @@ public class GameBoard {
     }
 
     public void updateBoard(ColorChange cc){
-        boardFields[cc.x][cc.y] = cc.newColor;
+        boardFields[cc.x][cc.y].setFieldValue(cc.newColor);
         updateScores();
     }
 
@@ -72,7 +70,7 @@ public class GameBoard {
         }
         for(int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
-                switch (boardFields[i][j]){
+                switch (boardFields[i][j].getFieldValue()){
                     case(1):
                         playerScores[0]++;
                         break;

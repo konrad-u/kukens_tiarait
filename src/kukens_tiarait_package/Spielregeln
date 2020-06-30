@@ -44,7 +44,9 @@ Always write the test code before production code. Only write enough production 
     4. I can track everything on server?    
     
 2. **Develop Strategies for each Bot**
-    1. Pathfinding Algorithms (Dijkstra's algorithm, )
+
+    1. Modeling of game board as a graph(?)
+    2. Pathfinding Algorithms (Dijkstra's algorithm, )
     
         https://www.baeldung.com/java-a-star-pathfinding
         

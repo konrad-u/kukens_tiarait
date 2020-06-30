@@ -2,8 +2,13 @@
 
 Here I will describe the steps I took in creating my player strategies for the Tiarait bots. 
 
-## Step 0: Multirun automation
+## Step 0: Multirun automation, game state tracking
 Unlike my previous programs for the SARG player, in this project I set up a Multirun run configuration (https://plugins.jetbrains.com/plugin/7248-multirun) through which I could in a single test run multiple instances of the default player NetworkClient class, making testing significantly easier. 
 
-After setting up the project and a dummy player class, I worked out how to imitate the 
+After setting up the project and a dummy player class, I set up the GameBoard class to imitate the server and coloring. Similar to the SARG project, I use a console print to make sure that the imitation is accurate, and that the player score countrs as well as color indications work properly. 
+
+Once I had the test configuration and game tracking setup, I adjusted the GameBoard class to contain a 2D Array of BoardFields; this would allow me to save the fieldValue and coordinates of the BoardField, to be able to use them in later calculations *e.g. for pathfinding distances, to calculate each player's current score etc.). 
+
+I set up a Boardfield Class with 3 integers, an x, a y and a fieldValue, which would be used to save the 
+
  
