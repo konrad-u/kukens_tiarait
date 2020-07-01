@@ -13,11 +13,17 @@ I set up a Boardfield Class with 3 integers, an x, a y and a fieldValue, which w
 
 ## Step 1: Abstract Bot Class
 
-To outline the general behaviour of any of the bots before developing specific strategies for each bot to follow, I outlined an AbstractBot class similarly to an interface to prescribe general fields and methods that each bot class would need to formulate a strategy, regardless of skill. The methods updateBotGoal() and setDirection(), as well as the constructor of the BotDirection inner class, were left empty for implementation in the concrete bot classes. 
+To outline the general behaviour of any of the bots before developing specific strategies for each bot to follow, I outlined an AbstractBot class similarly to an interface to prescribe general fields and methods that each bot class would need to formulate a strategy, regardless of skill. In the first design iteration, the AbstractBot defined the following fields: 
+ - int playerNumber, int botNr (self explanatory);
+ - GameBoard gameBoard, referencing the gameBoard in the networkClient class to maintain the game state
+ - BoardField botPosition, BoardField botGoal, needed to in the generic stage set up the two directional floats that the NetworkClient.setMoveDirection would use to direct the bot, in later stages to determine the path (and thus also the direction) for more sophisticated path finding.
+ - BotDirection direction, an inner class holding just two floats for the NetworkClient's setMoveDirection method, and 
+ - boolean atGoal, which could be used in the NetworkClient to indicate when it was time to determine a new goal
+ 
+ I decided to implement a very simple strategy of scanning the nearest neighbors, adding all non-wall options to an ArrayList of neighbors, and picking the first available option to test the method flow between server game state referencing. 
 
-I here started considering how I would want to go about making and using strategies, as I considered either maintaining a single goal throughout the game, updating it at regular intervals by reassessing the game board, or creating smaller goals, and, upon reaching them, creating new goals. 
-I decided to go with the latter option, figuring that for testing and strategy development starting with smaller goals, and, once some set of strategies was developed, to then experiment with more sophisticated options. 
+I here started considering how I would want to go about making and using strategies, as I considered either maintaining a single goal throughout the game, updating it at regular intervals by reassessing the game board, or creating smaller goals, and, upon reaching them, creating new goals. In this respect, the tiarait is different from sarg in that it involves real-time playing, and allows each developer their own way of dealing with it. 
+I decided to go with the latter option, figuring that for testing and strategy development starting with smaller goals, and, once some set of strategies was developed, to then experiment with more sophisticated options. I assumed at this point that there would be some adequate balance between continuously re-assessing the gameboard and otherwise just moving towards an outlined goal. 
 
-
-
+The setBotGoal would need to be a BFS method searching around each bot for 
  

@@ -1,4 +1,4 @@
-# Spielregeln
+# Spielregeln + Random notes
 
 - Drei Spieler spielen gleichzeitig in "Echtzeit".
 - Ziel des Spiels ist es, möglichst große Bereiche der Spielwelt durch "Überfahren" mit eigenen Bots mit der eigenen Farbe zu färben.
@@ -68,3 +68,11 @@ Always write the test code before production code. Only write enough production 
 
 - Vorausschauende Bewegung (muss nicht A* sein, aber auch kein ad-hoc-Verfahren nur über Nachbarschaft)
 - Unterschiedliche Nutzung der drei Bots (nicht alle identisch steuern, idealerweise - aber nicht zwingend kooperativ unter Ausnutzung der einzelnen Besonderheiten)
+
+##  Notes
+
+
+### Multiagent strategies
+
+- erasing bot 0 (upside down pyramid) should never cross the path of either of the other bots. The other bots should never cross the path of the erasing bot, and always try to minimize the path cost they are imposing in this condition on the eraser bot. 
+

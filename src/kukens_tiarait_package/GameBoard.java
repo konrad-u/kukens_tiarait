@@ -87,4 +87,8 @@ public class GameBoard {
             }
         }
     }
+
+    public BoardField getBoardField(int x, int y){
+        return boardFields[x][y];
+    }
 }

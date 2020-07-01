@@ -1,7 +1,7 @@
 package kukens_tiarait_package;
 
 /*
-AbstracBot determines everything that each bot needs to be able to do.
+AbstractBot determines everything that each bot needs to be able to do.
 
 Each bot must be able to:
 - determine a goal for movement
@@ -18,6 +18,8 @@ Each bot must be able to:
 
  */
 
+import java.util.ArrayList;
+
 public abstract class AbstractBot {
 //0 = pyramid on head, eraser 110% speed
 //1 = rectangle, colors 100% speed
@@ -25,24 +27,58 @@ public abstract class AbstractBot {
 
     int playerNumber;
     int botNr;
+    GameBoard gameBoard;
     BoardField botPosition;
     BoardField botGoal;
     BotDirection direction;
     boolean atGoal;
 
-    public AbstractBot(int playerNumber, int botNr, BoardField botPosition){
+
+    public AbstractBot(GameBoard gameBoard, int playerNumber, int botNr, BoardField botPosition){
+        this.gameBoard = gameBoard;
         this.playerNumber = playerNumber;
         this.botNr = botNr;
         this.botPosition = botPosition;
+        setBotGoal(gameBoard);
+        direction = new BotDirection(gameBoard, botPosition, botGoal);
         atGoal = false;
+    }
+
+    public void checkAtGoal(){
+        if(botPosition.equals(botGoal)){
+            atGoal = true;
+        }
+        else{
+            atGoal = false;
+        }
     }
 
     //updates goal based on the current gameBoard
     public void setBotGoal(GameBoard currentBoard){
+        /*
+        switch (botNr){
+            case(0):
+
+
+
+                break;
+            case(1):
+
+                break;
+
+            case(2):
+
+                break;
+        }
+
+         */
+
+        ArrayList<BoardField> immediateNeichbors = ArrayListImmediateNeighbors();
+        botGoal = immediateNeichbors.get(0);
     }
 
     public void setBotPosition(int xPos, int yPos){
-        botPosition = new BoardField(xPos, yPos, playerNumber);
+        botPosition = gameBoard.getBoardField((int)gameBoard.nC.getX(playerNumber, botNr),(int)gameBoard.nC.getY(playerNumber, botNr));
     }
 
     public void setDirection(GameBoard currentBoard) {
@@ -56,8 +92,12 @@ public abstract class AbstractBot {
         private float yDir;
 
         //where the pathfinding happens
+        //currently just from one field to the next. To be overridden.
         public BotDirection(GameBoard gameBoard, BoardField botPosition, BoardField botGoal){
-            
+            float newXDir = (float) - (botPosition.getX() - botGoal.getX());
+            float newYDir = (float) - (botPosition.getY() - botGoal.getY());
+            setxDir(newXDir);
+            setyDir(newYDir);
         };
 
         public float getxDir() {
@@ -75,5 +115,21 @@ public abstract class AbstractBot {
         public void setyDir(float yDir) {
             this.yDir = yDir;
         }
+
+    }
+
+
+    // this method can be extended with conditionals to meet the strategies of each bot,
+    // e.g. none of them should override their own color
+    public ArrayList<BoardField> ArrayListImmediateNeighbors() {
+        ArrayList<BoardField> neighbors = new ArrayList<>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() !=5) {
+                    neighbors.add(gameBoard.getBoardField((botPosition.getX() + i), (botPosition.getY() + j)));
+                }
+            }
+        }
+        return neighbors;
     }
 }
