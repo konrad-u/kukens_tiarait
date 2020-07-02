@@ -25,5 +25,8 @@ To outline the general behaviour of any of the bots before developing specific s
 I here started considering how I would want to go about making and using strategies, as I considered either maintaining a single goal throughout the game, updating it at regular intervals by reassessing the game board, or creating smaller goals, and, upon reaching them, creating new goals. In this respect, the tiarait is different from sarg in that it involves real-time playing, and allows each developer their own way of dealing with it. 
 I decided to go with the latter option, figuring that for testing and strategy development starting with smaller goals, and, once some set of strategies was developed, to then experiment with more sophisticated options. I assumed at this point that there would be some adequate balance between continuously re-assessing the gameboard and otherwise just moving towards an outlined goal. 
 
-The setBotGoal would need to be a BFS method searching around each bot for 
- 
+The setBotGoal would need to be a BFS method searching around each bot for acceptable goals, selected by a yet-to-be-determined heuristic. 
+
+## Step 2: Developing a recursive pathfinding strategy
+I chose to start with the simple pathfinding algorithm listed on the wikipedia page https://en.wikipedia.org/wiki/Pathfinding which essentially tracks the way from a goal to the starting point over all neighbors, extending the information of a BoardField with a counter integer, and, once the starting point has been reached, following the path of lowest counters to the goal. 
+To do this I created an additional class which would hold, additionally to the BoardField it references, an int field pathLengthCounter. 

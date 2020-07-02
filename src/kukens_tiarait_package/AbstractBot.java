@@ -25,12 +25,12 @@ public abstract class AbstractBot {
 //1 = rectangle, colors 100% speed
 //2 = pyramid, colors 2x 65% speed
 
-    int playerNumber;
-    int botNr;
-    BoardField botPosition;
-    BoardField botGoal;
-    BotDirection direction;
-    boolean atGoal;
+    private int playerNumber;
+    private int botNr;
+    private BoardField botPosition;
+    private BoardField botGoal;
+    private BotDirection direction;
+    private boolean atGoal;
 
 
     public AbstractBot(GameBoard gameBoard, int playerNumber, int botNr, BoardField botPosition){
@@ -42,17 +42,35 @@ public abstract class AbstractBot {
         atGoal = false;
     }
 
-    public void checkAtGoal(){
-        if(botPosition.equals(botGoal)){
-            atGoal = true;
-        }
-        else{
-            atGoal = false;
-        }
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
-    //updates goal based on the current gameBoard
-    public void setBotGoal(GameBoard gameBoard){
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
+    public int getBotNr() {
+        return botNr;
+    }
+
+    public void setBotNr(int botNr) {
+        this.botNr = botNr;
+    }
+
+    public BoardField getBotPosition() {
+        return botPosition;
+    }
+
+    public void setBotPosition(BoardField botPosition) {
+        this.botPosition = botPosition;
+    }
+
+    public BoardField getBotGoal() {
+        return botGoal;
+    }
+
+    public void setBotGoal(BoardField botGoal) {
         /*
         switch (botNr){
             case(0):
@@ -70,10 +88,41 @@ public abstract class AbstractBot {
         }
 
          */
+        this.botGoal = botGoal;
+    }
 
-        ArrayList<BoardField> immediateNeichbors = ArrayListImmediateNeighbors(gameBoard);
+    public BotDirection getDirection() {
+        return direction;
+    }
 
-        botGoal = immediateNeichbors.get(0);
+    public void setDirection(BotDirection direction) {
+        this.direction = direction;
+    }
+
+    public boolean isAtGoal() {
+        return atGoal;
+    }
+
+    public void setAtGoal(boolean atGoal) {
+        this.atGoal = atGoal;
+    }
+
+    public void checkAtGoal(){
+        if(botPosition.equals(botGoal)){
+            atGoal = true;
+        }
+        else{
+            atGoal = false;
+        }
+    }
+
+    //updates goal based on the current gameBoard
+    public void setBotGoal(GameBoard gameBoard){
+
+
+        //ArrayList<BoardField> immediateNeichbors = BFSRecursiveNeighbors(gameBoard, 0);
+
+        //botGoal = immediateNeichbors.get(0);
     }
 
     public void setBotPosition(GameBoard gameBoard, int xPos, int yPos){
@@ -120,22 +169,33 @@ public abstract class AbstractBot {
 
     // this method can be extended with conditionals to meet the strategies of each bot,
     // e.g. none of them should override their own color
-    public ArrayList<BoardField> ArrayListImmediateNeighbors(GameBoard gameBoard) {
-        ArrayList<BoardField> neighbors = new ArrayList<>();
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                if(i == 0 && j == 0){
+    //made to scan all neighbors recursively
+    public ArrayList<BoardFieldPlusCounter> BFSRecursiveNeighbors(BoardField parentField, GameBoard gameBoard, int parentDepth) {
 
-                }
-                else {
-                    //as long as not a wall and not the already position of bot
-                    if (gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() != 5) {
-                        neighbors.add(gameBoard.getBoardField((botPosition.getX() + i), (botPosition.getY() + j)));
+        //parentField = gameBoard.boardFields[botPosition.getX()][botPosition.getY()];
+
+
+
+        ArrayList<BoardFieldPlusCounter> neighbors = new ArrayList<>();
+
+
+        while(parentField != botGoal) {
+
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    //as long as not a wall AND not the already position of bot AND isn't already in neighbors
+                    if (gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() != 5
+                            && gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j] != parentField
+                            && !neighbors.contains(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j])) {
+                        BoardFieldPlusCounter weightedBoardField = new BoardFieldPlusCounter(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j], parentDepth);
+                        neighbors.add(weightedBoardField);
                     }
                 }
             }
+
         }
         System.out.println("our neighbors arrayList has length " + neighbors.size());
         return neighbors;
     }
+
 }
