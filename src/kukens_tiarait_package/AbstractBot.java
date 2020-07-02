@@ -27,7 +27,6 @@ public abstract class AbstractBot {
 
     int playerNumber;
     int botNr;
-    GameBoard gameBoard;
     BoardField botPosition;
     BoardField botGoal;
     BotDirection direction;
@@ -35,12 +34,11 @@ public abstract class AbstractBot {
 
 
     public AbstractBot(GameBoard gameBoard, int playerNumber, int botNr, BoardField botPosition){
-        this.gameBoard = gameBoard;
         this.playerNumber = playerNumber;
         this.botNr = botNr;
         this.botPosition = botPosition;
         setBotGoal(gameBoard);
-        direction = new BotDirection(gameBoard, botPosition, botGoal);
+        direction = new BotDirection(botPosition, botGoal);
         atGoal = false;
     }
 
@@ -54,7 +52,7 @@ public abstract class AbstractBot {
     }
 
     //updates goal based on the current gameBoard
-    public void setBotGoal(GameBoard currentBoard){
+    public void setBotGoal(GameBoard gameBoard){
         /*
         switch (botNr){
             case(0):
@@ -73,16 +71,17 @@ public abstract class AbstractBot {
 
          */
 
-        ArrayList<BoardField> immediateNeichbors = ArrayListImmediateNeighbors();
+        ArrayList<BoardField> immediateNeichbors = ArrayListImmediateNeighbors(gameBoard);
+
         botGoal = immediateNeichbors.get(0);
     }
 
-    public void setBotPosition(int xPos, int yPos){
-        botPosition = gameBoard.getBoardField((int)gameBoard.nC.getX(playerNumber, botNr),(int)gameBoard.nC.getY(playerNumber, botNr));
+    public void setBotPosition(GameBoard gameBoard, int xPos, int yPos){
+        botPosition = gameBoard.getBoardField(xPos,yPos);
     }
 
-    public void setDirection(GameBoard currentBoard) {
-        this.direction = new BotDirection(currentBoard, botPosition, botGoal);
+    public void setDirection(GameBoard gameBoard) {
+        this.direction = new BotDirection(botPosition, botGoal);
     }
 
     // class holds the two axis directional floats used in nc.setMoveDirection
@@ -93,9 +92,9 @@ public abstract class AbstractBot {
 
         //where the pathfinding happens
         //currently just from one field to the next. To be overridden.
-        public BotDirection(GameBoard gameBoard, BoardField botPosition, BoardField botGoal){
-            float newXDir = (float) - (botPosition.getX() - botGoal.getX());
-            float newYDir = (float) - (botPosition.getY() - botGoal.getY());
+        public BotDirection(BoardField botPosition, BoardField botGoal){
+            float newXDir = - (botPosition.getX() - botGoal.getX());
+            float newYDir = - (botPosition.getY() - botGoal.getY());
             setxDir(newXDir);
             setyDir(newYDir);
         };
@@ -121,15 +120,22 @@ public abstract class AbstractBot {
 
     // this method can be extended with conditionals to meet the strategies of each bot,
     // e.g. none of them should override their own color
-    public ArrayList<BoardField> ArrayListImmediateNeighbors() {
+    public ArrayList<BoardField> ArrayListImmediateNeighbors(GameBoard gameBoard) {
         ArrayList<BoardField> neighbors = new ArrayList<>();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() !=5) {
-                    neighbors.add(gameBoard.getBoardField((botPosition.getX() + i), (botPosition.getY() + j)));
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if(i == 0 && j == 0){
+
+                }
+                else {
+                    //as long as not a wall and not the already position of bot
+                    if (gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() != 5) {
+                        neighbors.add(gameBoard.getBoardField((botPosition.getX() + i), (botPosition.getY() + j)));
+                    }
                 }
             }
         }
+        System.out.println("our neighbors arrayList has length " + neighbors.size());
         return neighbors;
     }
 }

@@ -15,14 +15,12 @@ public class DTPlayer {
 
         GameBoard myGameBoard = new GameBoard(nC);
         myGameBoard.printBoard();
-        GenericBot gBot1 = new GenericBot(
+        GenericBot gBot0 = new GenericBot(
                 myGameBoard,
                 player,
                 0,
                 myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
         );
-
-
 
         while (nC.isAlive()) {
             /*
@@ -32,11 +30,12 @@ public class DTPlayer {
             nC.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
 
             nC.setMoveDirection(0, 0.5f, -0.5f);
-            nC.setMoveDirection(1, 0.1f, 1.8f);
-            nC.setMoveDirection(2, -5.1f, -0.8f);
+
             printPositions(player, nC);
 
              */
+            nC.setMoveDirection(1, 0.1f, 1.8f);
+            nC.setMoveDirection(2, -5.1f, -0.8f);
 
             ColorChange cc;
             cc = nC.getNextColorChange();
@@ -48,17 +47,33 @@ public class DTPlayer {
                         + cc.y + " by player "
                         + cc.newColor);
                 myGameBoard.updateBoard(cc);
-                myGameBoard.printBoard();
+
                 cc = null;
+
+
             }
+
+            gBot0.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
+            gBot0.checkAtGoal();
+            //myGameBoard.printBoard();
+
             // if bot isn't at it's goal, send direction via bots .direction.getxDir, .direction.getyDir
-            if(!gBot1.atGoal){
-                nC.setMoveDirection(0, gBot1.direction.getxDir(), gBot1.direction.getyDir());
-                gBot1.checkAtGoal();
+            if(!gBot0.atGoal){
+                nC.setMoveDirection(0, gBot0.direction.getxDir(), gBot0.direction.getyDir());
+                gBot0.checkAtGoal();
+                gBot0.setDirection(myGameBoard);
+                if(player == 6) {
+                    System.out.println("gBot 0 from p" + player + " is at " + gBot0.botPosition.getX() + "," + gBot0.botPosition.getY());
+                    System.out.println("goal is " + gBot0.botGoal.getX() + "," + gBot0.botGoal.getY());
+                    System.out.println("the goal has is a wall? " + nC.isWall(gBot0.botGoal.getX(), gBot0.botGoal.getY()));
+                    System.out.println("direction is " + gBot0.direction.getxDir() + "," + gBot0.direction.getyDir());
+                }
             }
             // if it is at it's goal, give it a new one and reset the atGoal boolean to false
             else{
-                gBot1.setBotGoal(myGameBoard);
+                gBot0.setBotGoal(myGameBoard);
+                gBot0.checkAtGoal();
+                System.out.println("gBot 0 from p" + player + " was at its goal .......... at " + gBot0.botPosition.getX() + "," + gBot0.botPosition.getY());
             }
         }
     }
