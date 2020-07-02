@@ -198,4 +198,56 @@ public abstract class AbstractBot {
         return neighbors;
     }
 
+
+    //Pseudocode createPath; method to find path FROM GOAL TO STARTING POINT
+
+    public ArrayList<BoardFieldPlusCounter> createPath(GameBoard gameBoard){
+
+    ArrayList<BoardFieldPlusCounter> allFieldsToPath = new ArrayList<>();
+
+    BoardFieldPlusCounter botGoalFPS = new BoardFieldPlusCounter(botGoal, 0);
+    BoardFieldPlusCounter botPositionFPS = new BoardFieldPlusCounter(botPosition, 0);
+
+    allFieldsToPath.add(botGoalFPS);
+    botGoalFPS.setInList(true);
+
+    while(!allFieldsToPath.contains(botPositionFPS)){
+
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                //as long as not a wall AND not the already position of bot AND isn't already in neighbors
+                if (gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() != 5
+                        && gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j] != parentField
+                        && !neighbors.contains(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j])) {
+                    BoardFieldPlusCounter weightedBoardField = new BoardFieldPlusCounter(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j], parentDepth);
+                    neighbors.add(weightedBoardField);
+                }
+            }
+        }
+
+    }
+    return allFieldsToPath;
+    }
+
+public ArrayList<BoardFieldPlusCounter> getNeighbors(GameBoard gameBoard, BoardFieldPlusCounter currentFieldPC, ArrayList pathSoFar){
+
+        ArrayList<BoardFieldPlusCounter> neighbors = new ArrayList<>();
+
+    for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
+            BoardFieldPlusCounter neighbor = new BoardFieldPlusCounter(gameBoard.boardFields[currentField.getX() + i][currentField.getY() + j], currentFieldPC.getCounter()+1);
+            if (gameBoard.boardFields[neighbor.getBoardField().getX()][neighbor.getBoardField().getY()].getFieldValue() != 5
+                    && neighbor.getBoardField() != currentFieldPC.getBoardField()
+                    && !pathSoFar.contains(neighbor)){
+                neighbors.add(neighbor);
+            }
+        }
+    }
+      return neighbors;
+}
+
+
+
+
+
 }

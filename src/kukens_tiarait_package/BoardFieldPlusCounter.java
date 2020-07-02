@@ -5,10 +5,12 @@ public class BoardFieldPlusCounter {
 
     private int counter;
     private BoardField boardField;
+    private boolean isInList;
 
     public BoardFieldPlusCounter(BoardField boardField, int counter){
         this.boardField = boardField;
         this.counter = counter;
+        isInList = false;
     }
 
     public int getCounter(){
@@ -27,4 +29,11 @@ public class BoardFieldPlusCounter {
         this.boardField = boardField;
     }
 
+    public boolean isInList() {
+        return isInList;
+    }
+
+    public void setInList(boolean inList) {
+        isInList = inList;
+    }
 }
