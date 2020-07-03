@@ -250,11 +250,13 @@ public abstract class AbstractBot {
         }
         maxValueInPath = Collections.max(allFieldsToPath.values());
         for(BoardField bN : bNeighborhood){
-            allFieldsToPath.put(bN, maxValueInPath +1);// this is where we can add stuff ot allFieldsToPath, not before.
+            if(!allFieldsToPath.containsKey(bN)){
+                allFieldsToPath.put(bN, maxValueInPath +1);// this is where we can add stuff ot allFieldsToPath, not before.
+            }
         }
         System.out.println("allFieldsToPath has length " + allFieldsToPath.size() + " and contains: ");
-        for(BoardField bN : allFieldsToPath.keySet()){
-            System.out.println("[" + bN.getX() + "][" + bN.getY()  + "], counter value " + allFieldsToPath.get(bN).intValue());
+        for(BoardField b : allFieldsToPath.keySet()){
+            System.out.println("[" + b.getX() + "][" + b.getY()  + "], counter value " + allFieldsToPath.get(b));
         }
     }
 
