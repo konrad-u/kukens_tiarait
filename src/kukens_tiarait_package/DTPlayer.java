@@ -84,7 +84,7 @@ public class DTPlayer {
             }
             // if it is at it's goal, give it a new one and reset the atGoal boolean to false
             else{
-                gBot0.setBotGoal(myGameBoard);
+                gBot0.setBotGoal(myGameBoard.getBoardField(15,15));
                 gBot0.checkAtGoal();
                 /*
                 System.out.println("gBot 0 from p"

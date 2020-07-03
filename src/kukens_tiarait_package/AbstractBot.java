@@ -19,6 +19,8 @@ Each bot must be able to:
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public abstract class AbstractBot {
 //0 = pyramid on head, eraser 110% speed
@@ -37,7 +39,7 @@ public abstract class AbstractBot {
         this.playerNumber = playerNumber;
         this.botNr = botNr;
         this.botPosition = botPosition;
-        setBotGoal(gameBoard);
+        //setBotGoal(gameBoard);
         //direction = new BotDirection(botPosition, botGoal);
         atGoal = false;
     }
@@ -115,7 +117,7 @@ public abstract class AbstractBot {
      */
 
     public void setDirection(GameBoard gameBoard) {
-        ArrayList<BoardFieldPlusCounter> path = createPath(gameBoard);
+        //ArrayList<BoardFieldPlusCounter> path = createPath(gameBoard);
 
         while(botPosition != botGoal){
         //always follow the direction from the current position to the next boardField in the list, crossing them off
@@ -190,6 +192,7 @@ public abstract class AbstractBot {
     // this method can be extended with conditionals to meet the strategies of each bot,
     // e.g. none of them should override their own color
     //made to scan all neighbors recursively
+    /*
     public ArrayList<BoardFieldPlusCounter> BFSRecursiveNeighbors(BoardField parentField, GameBoard gameBoard, int parentDepth) {
 
         //parentField = gameBoard.boardFields[botPosition.getX()][botPosition.getY()];
@@ -218,54 +221,56 @@ public abstract class AbstractBot {
         return neighbors;
     }
 
+     */
+
 
     //Pseudocode createPath; method to find path FROM GOAL TO STARTING POINT
 
-    public ArrayList<BoardFieldPlusCounter> createPath(GameBoard gameBoard){
+    public HashMap<BoardField , Integer > createPath(GameBoard gameBoard){
 
-    ArrayList<BoardFieldPlusCounter> allFieldsToPath = new ArrayList<>();
+        HashMap<BoardField, Integer> allFieldsToPath = new HashMap<BoardField, Integer>();
+        ArrayList<BoardField> bNeighborhood = new ArrayList<>();
 
-    ArrayList<BoardFieldPlusCounter> bNeighborhood = new ArrayList<>();
+    allFieldsToPath.put(botGoal, 0);
 
-    BoardFieldPlusCounter botGoalFPS = new BoardFieldPlusCounter(botGoal, 0);
-    BoardFieldPlusCounter botPositionFPS = new BoardFieldPlusCounter(botPosition, 0);
-
-    allFieldsToPath.add(botGoalFPS);
-
-    while(!allFieldsToPath.contains(botPositionFPS) || allFieldsToPath.size() < 100){
+    while(!allFieldsToPath.containsKey(botPosition) && allFieldsToPath.size() < 100){
         bNeighborhood.clear();
-        System.out.println("Looking at bot " + botNr + " at position [" + botPosition.getX() + "][" + botPosition.getY() + "]");
-        for(BoardFieldPlusCounter b : allFieldsToPath){
+        int maxValueInPath = 0;
+                System.out.println("Looking at bot " + botNr + " at position [" + botPosition.getX() + "][" + botPosition.getY() + "]");
+        for(BoardField b : allFieldsToPath.keySet()){
             //System.out.println("   Neighbor at position [" + b.getBoardField().getX() + "][" + b.getBoardField().getY()  + "]" + " has the following neighbors: ");
-            ArrayList<BoardFieldPlusCounter> bNeighbors = getNeighbors(gameBoard, b, allFieldsToPath);
-            for(BoardFieldPlusCounter bN : bNeighbors){
-                if(!bN.isSameAs(b) && bN.distanceTo(botPositionFPS) <= b.distanceTo(botPositionFPS)){
+            ArrayList<BoardField> bNeighbors = getNeighbors(gameBoard, b, allFieldsToPath);
+
+            for(BoardField bN : bNeighbors){
+                if(!bN.equals(b) && bN.distanceTo(botPosition) <= b.distanceTo(botPosition)){
                     bNeighborhood.add(bN);
                     //System.out.println("      [" + bN.getBoardField().getX() + "][" + bN.getBoardField().getY()  + "], steps: " + bN.getCounter());
                 }
             }
         }
-        for(BoardFieldPlusCounter bN : bNeighborhood){
-            allFieldsToPath.add(bN);// this is where we can add stuff ot allFieldsToPath, not before.
+        maxValueInPath = Collections.max(allFieldsToPath.values());
+        for(BoardField bN : bNeighborhood){
+            allFieldsToPath.put(bN, maxValueInPath +1);// this is where we can add stuff ot allFieldsToPath, not before.
         }
-        System.out.println("allFieldsToPath contains: ");
-        for(BoardFieldPlusCounter bN : allFieldsToPath){
-            System.out.println("[" + bN.getBoardField().getX() + "][" + bN.getBoardField().getY()  + "]");
+        System.out.println("allFieldsToPath has length " + allFieldsToPath.size() + " and contains: ");
+        for(BoardField bN : allFieldsToPath.keySet()){
+            System.out.println("[" + bN.getX() + "][" + bN.getY()  + "], counter value " + allFieldsToPath.get(bN).intValue());
         }
     }
 
     return allFieldsToPath;
     }
 
-public ArrayList<BoardFieldPlusCounter> getNeighbors(GameBoard gameBoard, BoardFieldPlusCounter currentFieldPC, ArrayList pathSoFar){
+public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField currentField, HashMap pathSoFar){
 
-        ArrayList<BoardFieldPlusCounter> neighbors = new ArrayList<>();
+        ArrayList<BoardField> neighbors = new ArrayList<>();
 
     for (int i = -1; i < 2; i++) {
         for (int j = -1; j < 2; j++) {
-            BoardFieldPlusCounter neighbor = new BoardFieldPlusCounter(gameBoard.boardFields[currentFieldPC.getBoardField().getX() + i][currentFieldPC.getBoardField().getY() + j], currentFieldPC.getCounter()+1);
-            if (gameBoard.boardFields[neighbor.getBoardField().getX()][neighbor.getBoardField().getY()].getFieldValue() != 5
-                    && !neighbor.isSameAs(currentFieldPC)){
+
+            BoardField neighbor = gameBoard.getBoardField((currentField.getX()+i), (currentField.getY() + j));
+            if(neighbor.getFieldValue() != 5
+                && neighbor != currentField){
                 neighbors.add(neighbor);
             }
         }

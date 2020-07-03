@@ -13,8 +13,8 @@ import lenz.htw.tiarait.ColorChange;
 import lenz.htw.tiarait.net.NetworkClient;
 
 public class GameBoard {
-    BoardField[][] boardFields = new BoardField[32][32];
-    NetworkClient nC;
+    private BoardField[][] boardFields = new BoardField[32][32];
+    private NetworkClient nC;
 
     int[] playerScores = new int[4];
 
