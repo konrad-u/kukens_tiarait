@@ -21,6 +21,7 @@ Each bot must be able to:
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public abstract class AbstractBot {
 //0 = pyramid on head, eraser 110% speed
@@ -256,9 +257,30 @@ public abstract class AbstractBot {
         }
         System.out.println("allFieldsToPath has length " + allFieldsToPath.size() + " and contains: ");
         for(BoardField b : allFieldsToPath.keySet()){
-            System.out.println("[" + b.getX() + "][" + b.getY()  + "], counter value " + allFieldsToPath.get(b));
+            System.out.println("pos: [" + b.getX() + "][" + b.getY()  + "], steps: " + allFieldsToPath.get(b) + ", distance from bot: " + b.distanceTo(botPosition));
         }
     }
+/*
+    int maxCounter = Collections.max(allFieldsToPath.values());
+    //LinkedList<BoardField> linkedPath = new LinkedList<>();
+    //linkedPath.add(botPosition);
+
+        for(int i = maxCounter; i > 0; i--){
+            ArrayList<BoardField> allOfCount = new ArrayList<>();
+            for(BoardField bF : allFieldsToPath.keySet()){
+                if(bF)
+            }
+        }
+
+
+    while(allFieldsToPath.size() > maxCounter){
+
+    }
+    for(BoardField bF : allFieldsToPath.keySet()){
+
+    }
+
+ */
 
     return allFieldsToPath;
     }
@@ -272,7 +294,8 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
 
             BoardField neighbor = gameBoard.getBoardField((currentField.getX()+i), (currentField.getY() + j));
             if(neighbor.getFieldValue() != 5
-                && neighbor != currentField){
+                && neighbor != currentField
+                && neighbor.distanceTo(botPosition) < currentField.distanceTo(botPosition)){
                 neighbors.add(neighbor);
             }
         }

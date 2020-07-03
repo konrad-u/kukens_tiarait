@@ -32,16 +32,16 @@ public class BoardField {
         return fieldValue;
     }
 
-    public boolean isSameAs(BoardField otherBoardFieldPlusCounter){
-        if(this.getX() ==otherBoardFieldPlusCounter.getX()
-                && this.getY() ==otherBoardFieldPlusCounter.getY()){
+    public boolean isSameAs(BoardField otherBoardField){
+        if(this.getX() ==otherBoardField.getX()
+                && this.getY() ==otherBoardField.getY()){
             return true;
         }
         return false;
     }
 
-    public int distanceTo(BoardField otherBoardFieldPlusCounter){
-        int distance = Math.abs(getX() - otherBoardFieldPlusCounter.getX())+ Math.abs(getY() - otherBoardFieldPlusCounter.getY());
+    public int distanceTo(BoardField otherBoardField){
+        int distance = Math.abs(getX() - otherBoardField.getX())+ Math.abs(getY() - otherBoardField.getY());
         return distance;
     }
 

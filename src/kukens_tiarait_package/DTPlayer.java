@@ -34,10 +34,6 @@ public class DTPlayer {
 
             //testing for pathfinding
 
-
-
-
-
             /*
             float x = nC.getX(player, botNr);
             float y = nC.getY(player, botNr);
