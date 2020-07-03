@@ -38,9 +38,11 @@ public abstract class AbstractBot {
         this.botNr = botNr;
         this.botPosition = botPosition;
         setBotGoal(gameBoard);
-        direction = new BotDirection(botPosition, botGoal);
+        //direction = new BotDirection(botPosition, botGoal);
         atGoal = false;
     }
+
+    /*
 
     public int getPlayerNumber() {
         return playerNumber;
@@ -58,20 +60,29 @@ public abstract class AbstractBot {
         this.botNr = botNr;
     }
 
+     */
+
     public BoardField getBotPosition() {
         return botPosition;
     }
 
-    public void setBotPosition(BoardField botPosition) {
+    /* public void setBotPosition(BoardField botPosition) {
         this.botPosition = botPosition;
+    }
+
+     */
+
+    public void setBotPosition(GameBoard gameBoard, int xPos, int yPos){
+        botPosition = gameBoard.getBoardField(xPos,yPos);
     }
 
     public BoardField getBotGoal() {
         return botGoal;
     }
 
+
     public void setBotGoal(BoardField botGoal) {
-        /*
+
         switch (botNr){
             case(0):
 
@@ -87,25 +98,41 @@ public abstract class AbstractBot {
                 break;
         }
 
-         */
+
         this.botGoal = botGoal;
     }
+
 
     public BotDirection getDirection() {
         return direction;
     }
 
+    /*
     public void setDirection(BotDirection direction) {
         this.direction = direction;
+    }
+
+     */
+
+    public void setDirection(GameBoard gameBoard) {
+        ArrayList<BoardFieldPlusCounter> path = createPath(gameBoard);
+
+        while(botPosition != botGoal){
+        //always follow the direction from the current position to the next boardField in the list, crossing them off
+        }
+        this.direction = new BotDirection(botPosition, botGoal);
     }
 
     public boolean isAtGoal() {
         return atGoal;
     }
 
+    /*
     public void setAtGoal(boolean atGoal) {
         this.atGoal = atGoal;
     }
+
+     */
 
     public void checkAtGoal(){
         if(botPosition.equals(botGoal)){
@@ -125,14 +152,6 @@ public abstract class AbstractBot {
         //botGoal = immediateNeichbors.get(0);
     }
 
-    public void setBotPosition(GameBoard gameBoard, int xPos, int yPos){
-        botPosition = gameBoard.getBoardField(xPos,yPos);
-    }
-
-    public void setDirection(GameBoard gameBoard) {
-        this.direction = new BotDirection(botPosition, botGoal);
-    }
-
     // class holds the two axis directional floats used in nc.setMoveDirection
     public class BotDirection {
 
@@ -142,6 +161,7 @@ public abstract class AbstractBot {
         //where the pathfinding happens
         //currently just from one field to the next. To be overridden.
         public BotDirection(BoardField botPosition, BoardField botGoal){
+
             float newXDir = - (botPosition.getX() - botGoal.getX());
             float newYDir = - (botPosition.getY() - botGoal.getY());
             setxDir(newXDir);
@@ -205,27 +225,35 @@ public abstract class AbstractBot {
 
     ArrayList<BoardFieldPlusCounter> allFieldsToPath = new ArrayList<>();
 
+    ArrayList<BoardFieldPlusCounter> bNeighborhood = new ArrayList<>();
+
     BoardFieldPlusCounter botGoalFPS = new BoardFieldPlusCounter(botGoal, 0);
     BoardFieldPlusCounter botPositionFPS = new BoardFieldPlusCounter(botPosition, 0);
 
     allFieldsToPath.add(botGoalFPS);
-    botGoalFPS.setInList(true);
 
-    while(!allFieldsToPath.contains(botPositionFPS)){
-
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                //as long as not a wall AND not the already position of bot AND isn't already in neighbors
-                if (gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j].getFieldValue() != 5
-                        && gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j] != parentField
-                        && !neighbors.contains(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j])) {
-                    BoardFieldPlusCounter weightedBoardField = new BoardFieldPlusCounter(gameBoard.boardFields[botPosition.getX() + i][botPosition.getY() + j], parentDepth);
-                    neighbors.add(weightedBoardField);
+    while(!allFieldsToPath.contains(botPositionFPS) || allFieldsToPath.size() < 100){
+        bNeighborhood.clear();
+        System.out.println("Looking at bot " + botNr + " at position [" + botPosition.getX() + "][" + botPosition.getY() + "]");
+        for(BoardFieldPlusCounter b : allFieldsToPath){
+            //System.out.println("   Neighbor at position [" + b.getBoardField().getX() + "][" + b.getBoardField().getY()  + "]" + " has the following neighbors: ");
+            ArrayList<BoardFieldPlusCounter> bNeighbors = getNeighbors(gameBoard, b, allFieldsToPath);
+            for(BoardFieldPlusCounter bN : bNeighbors){
+                if(!bN.isSameAs(b) && bN.distanceTo(botPositionFPS) <= b.distanceTo(botPositionFPS)){
+                    bNeighborhood.add(bN);
+                    //System.out.println("      [" + bN.getBoardField().getX() + "][" + bN.getBoardField().getY()  + "], steps: " + bN.getCounter());
                 }
             }
         }
-
+        for(BoardFieldPlusCounter bN : bNeighborhood){
+            allFieldsToPath.add(bN);// this is where we can add stuff ot allFieldsToPath, not before.
+        }
+        System.out.println("allFieldsToPath contains: ");
+        for(BoardFieldPlusCounter bN : allFieldsToPath){
+            System.out.println("[" + bN.getBoardField().getX() + "][" + bN.getBoardField().getY()  + "]");
+        }
     }
+
     return allFieldsToPath;
     }
 
@@ -235,19 +263,13 @@ public ArrayList<BoardFieldPlusCounter> getNeighbors(GameBoard gameBoard, BoardF
 
     for (int i = -1; i < 2; i++) {
         for (int j = -1; j < 2; j++) {
-            BoardFieldPlusCounter neighbor = new BoardFieldPlusCounter(gameBoard.boardFields[currentField.getX() + i][currentField.getY() + j], currentFieldPC.getCounter()+1);
+            BoardFieldPlusCounter neighbor = new BoardFieldPlusCounter(gameBoard.boardFields[currentFieldPC.getBoardField().getX() + i][currentFieldPC.getBoardField().getY() + j], currentFieldPC.getCounter()+1);
             if (gameBoard.boardFields[neighbor.getBoardField().getX()][neighbor.getBoardField().getY()].getFieldValue() != 5
-                    && neighbor.getBoardField() != currentFieldPC.getBoardField()
-                    && !pathSoFar.contains(neighbor)){
+                    && !neighbor.isSameAs(currentFieldPC)){
                 neighbors.add(neighbor);
             }
         }
     }
       return neighbors;
 }
-
-
-
-
-
 }

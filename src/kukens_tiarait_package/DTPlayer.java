@@ -22,7 +22,22 @@ public class DTPlayer {
                 myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
         );
 
+        System.out.println("..............testing the pathfinding methods, gBot0 distance to 15,15");
+        System.out.println("gBot0 is at " + gBot0.getBotPosition().getX() + "," + gBot0.getBotPosition().getY());
+
+        gBot0.setBotGoal(myGameBoard.getBoardField(15,15));
+        gBot0.createPath(myGameBoard);
+
+
+
         while (nC.isAlive()) {
+
+            //testing for pathfinding
+
+
+
+
+
             /*
             float x = nC.getX(player, botNr);
             float y = nC.getY(player, botNr);
@@ -34,8 +49,8 @@ public class DTPlayer {
             printPositions(player, nC);
 
              */
-            nC.setMoveDirection(1, 0.1f, 1.8f);
-            nC.setMoveDirection(2, -5.1f, -0.8f);
+            //nC.setMoveDirection(1, 0.1f, 1.8f);
+            //nC.setMoveDirection(2, -5.1f, -0.8f);
 
             ColorChange cc;
             cc = nC.getNextColorChange();
@@ -71,12 +86,15 @@ public class DTPlayer {
             else{
                 gBot0.setBotGoal(myGameBoard);
                 gBot0.checkAtGoal();
+                /*
                 System.out.println("gBot 0 from p"
                         + player
                         + " was at its goal .......... at "
                         + gBot0.getBotPosition().getX()
                         + ","
                         + gBot0.getBotPosition().getY());
+
+                 */
             }
         }
     }
