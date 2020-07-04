@@ -47,14 +47,15 @@ public class EraserBot extends AbstractBot {
         BoardField closestEnemyField = null;
 
         //1. scan whole board for all enemy fields, adding to the allEnemyFields arraylist
+        //2. pick the enemy field which is closest, and set it as the goal
         for(int i = 0; i < 32; i++){
             for(int j = 0; j < 32; j++){
 
                 BoardField bf = gameBoard.getBoardField(i,j);
 
                 if(bf.isEnemyPainted(getPlayerNumber())){
-                    System.out.println("My getPlayerNumber is " + getPlayerNumber());
-                    System.out.println("the enemy fieldValue is " + (bf.getFieldValue()-1));
+                    //System.out.println("My getPlayerNumber is " + getPlayerNumber());
+                    //System.out.println("the enemy fieldValue is " + (bf.getFieldValue()-1));
                     int distanceToEnemyField = getBotPosition().distanceTo(bf);
 
                     if(distanceToEnemyField < lowestDistance){

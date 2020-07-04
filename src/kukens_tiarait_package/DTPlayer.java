@@ -22,9 +22,19 @@ public class DTPlayer {
                     myGameBoard.getBoardField((int) nC.getX(player, 0), (int) nC.getY(player, 0))
             );
 
+            PainterBot painterBot = new PainterBot(
+                    myGameBoard,
+                    player,
+                    1,
+                    myGameBoard.getBoardField((int) nC.getX(player, 1), (int) nC.getY(player, 1)),
+                    nC
+            );
+
         while (nC.isAlive()) {
 
-            nC.setMoveDirection(1, 0.1f, 1.8f);
+            //printAllBotPositions(nC);
+
+            //nC.setMoveDirection(1, 0.1f, 1.8f);
             nC.setMoveDirection(2, -5.1f, -0.8f);
 
             ColorChange cc;
@@ -40,6 +50,7 @@ public class DTPlayer {
             }
 
             eraserBot.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
+            painterBot.setBotPosition(myGameBoard, (int)nC.getX(player, 1), (int)nC.getY(player,1));
 
             if(eraserBot.getBotGoal() == null){
                 try {
@@ -50,8 +61,7 @@ public class DTPlayer {
                 }
             }
             eraserBot.checkAtGoal();
-
-
+            painterBot.checkAtGoal();
 
             //myGameBoard.printBoard();
 
@@ -69,13 +79,28 @@ public class DTPlayer {
             else{
                 eraserBot.setBotGoal(myGameBoard);
             }
+
+            if(!painterBot.isAtGoal()){
+                painterBot.setBotGoal(myGameBoard);
+                try {
+                    painterBot.setDirection(myGameBoard);
+                }
+                catch (Exception e){
+                    System.out.println("couldn't set painterBots direction...");
+                }
+                nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
+                //eraserBot.checkAtGoal();
+            }
+            else{
+                painterBot.setBotGoal(myGameBoard);
+            }
         }
     }
     
     public static void printPositions(int player, NetworkClient nC){
         for(int i = 0; i < 3; i++) {
-            System.out.println("Player "
-                    + player
+            System.out.println("P"
+                    + (player+1)
                     + " Bot: "
                     + i
                     + " is at "
@@ -84,6 +109,13 @@ public class DTPlayer {
                     + (int) nC.getY(player, i));
         }
         System.out.println();
+    }
+
+    public static void printAllBotPositions(NetworkClient nC){
+        for(int j = 0; j < 4; j++){
+            System.out.println("Talking about player " + (j+1) );
+            printPositions(j, nC);
+        }
     }
 
 }

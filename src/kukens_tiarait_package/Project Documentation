@@ -56,10 +56,18 @@ I need to fix bots to only go diagonal when there aren't any walls around them; 
 I currently fixed this issue, by only allowing vertical and horizonal movement (thus eliminating diagonal stepping), and it seems to work better. Sometimes, some bots still don't move, but when they do they (most of the time) reach both test goals. 
 
 ## Step 3: Setting up basic goals
-Once I had realized the pathfinding methods and could observe these working properly (via the setDirection method, and two static goals set in the DTPlayer class), it was time to create the concrete bot classes. 
+Once I had realized the pathfinding methods and could observe these working properly (via the setDirection method, and two static goals set in the DTPlayer class), it was time to create the concrete bot classes. I decided to, for each bot, start with a default goal based on the current game state, and then, depending on time left, try out more sophisticated goal determination and path weighing. 
+
+### eraser bot (bot 0)
 
 In the rough form the er
 
 eraser bot goes to closest enemy field by scanning whole board 
 
 - had to remove field setting for visual feedback, as otherwise bots woudn't recognise where sth had been or hadn't 
+
+- had to add try catches to goalsetting, but now bots will pick up from inertia 
+
+### painter bot (bot 1)
+
+I figured that the painter bot in the first version should as a goal set itself to follow the painter bot of the best player, and 
