@@ -212,14 +212,19 @@ public class AbstractBot {
             }
         }
         for(BoardField b : allFieldsToPath.keySet()){
-            gameBoard.getBoardField(b.getX(), b.getY()).setFieldValue(6);
+            //gameBoard.getBoardField(b.getX(), b.getY()).setFieldValue(6);
         }
     }
 
     //PART 2: setting up the straight path between botPosition and botGoal
         int maxSteps = Collections.max(allFieldsToPath.values());
         BoardField[] shortestPath = new BoardField[maxSteps];
-        shortestPath[shortestPath.length-1] = botGoal;
+        if(shortestPath.length < 2){
+            shortestPath[0] = botGoal;
+        }
+        else {
+            shortestPath[shortestPath.length - 1] = botGoal;
+        }
 
         for(int i = 1; i < maxSteps; i++){
             ArrayList<BoardField> inferiorSteps = new ArrayList<>();
@@ -245,15 +250,15 @@ public class AbstractBot {
         for(int j = 0; j < shortestPath.length; j++){
             if(shortestPath[j] != null) {
                 System.out.print("[" + shortestPath[j].getX() + "][" + shortestPath[j].getY() + "] , ");
-                shortestPath[j].setFieldValue(7);
+                //shortestPath[j].setFieldValue(7);
             }
             else{
                 System.out.println("...");
             }
         }
 
-        botPosition.setFieldValue(8);
-        botGoal.setFieldValue(9);
+        //botPosition.setFieldValue(8);
+        //botGoal.setFieldValue(9);
     return shortestPath;
     }
 

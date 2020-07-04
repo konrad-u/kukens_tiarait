@@ -66,6 +66,8 @@ public class EraserBot extends AbstractBot {
         if(closestEnemyField == null){
             setBotGoal(getBotPosition());
         }
-        setBotGoal(closestEnemyField);
+        else {
+            setBotGoal(closestEnemyField);
+        }
     }
 }

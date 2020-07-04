@@ -42,15 +42,24 @@ public class DTPlayer {
             }
 
             eraserBot.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
+
             if(eraserBot.getBotGoal() == null){
                 eraserBot.setBotGoal(eraserBot.getBotPosition());
             }
             eraserBot.checkAtGoal();
 
+
+
             myGameBoard.printBoard();
 
             if(!eraserBot.isAtGoal()){
-                eraserBot.setDirection(myGameBoard);
+                eraserBot.setBotGoal(myGameBoard);
+                try {
+                    eraserBot.setDirection(myGameBoard);
+                }
+                catch (Exception e){
+                    System.out.println("couldn't set eraserBots direction...");
+                }
                 nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
                 //eraserBot.checkAtGoal();
             }
