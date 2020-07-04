@@ -22,15 +22,23 @@ public class DTPlayer {
                 myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
         );
 
-        System.out.println("..............testing the pathfinding methods, gBot0 distance to 15,15");
-        System.out.println("gBot0 is at " + gBot0.getBotPosition().getX() + "," + gBot0.getBotPosition().getY());
+        gBot0.setBotGoal(myGameBoard.getBoardField(20,20));
+        //gBot0.createPath(myGameBoard);
 
-        gBot0.setBotGoal(myGameBoard.getBoardField(15,15));
-        gBot0.createPath(myGameBoard);
+        /*
+        System.out.println("..............testing pathfinding methods, gBot0 goal set to "
+                + gBot0.getBotGoal().getX()
+                + ","
+                + gBot0.getBotGoal().getY());
+        System.out.println("gBot0 is at "
+                + gBot0.getBotPosition().getX()
+                + ","
+                + gBot0.getBotPosition().getY());
+        myGameBoard.printBoard();
+
+         */
 
         while (nC.isAlive()) {
-
-            //testing for pathfinding
 
             /*
             float x = nC.getX(player, botNr);
@@ -50,7 +58,6 @@ public class DTPlayer {
             cc = nC.getNextColorChange();
 
             while (cc != null) {
-                //cc = nC.getNextColorChange();
                 System.out.println("a color change happened at "
                         + cc.x + ","
                         + cc.y + " by player "
@@ -61,36 +68,18 @@ public class DTPlayer {
 
             gBot0.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
             gBot0.checkAtGoal();
-            //THIS IS THE EXTRA PRINTING USING FIELDVALUE 6 TO MAKE x's
+            //THIS IS THE EXTRA PRINTING: 6 = x, 7 = o, 8 = S, 9 = G
             myGameBoard.printBoard();
 
+            gBot0.setDirection(myGameBoard);
             // if bot isn't at it's goal, send direction via bots .direction.getxDir, .direction.getyDir
             if(!gBot0.isAtGoal()){
                 nC.setMoveDirection(0, gBot0.getDirection().getxDir(), gBot0.getDirection().getyDir());
                 gBot0.checkAtGoal();
                 gBot0.setDirection(myGameBoard);
-                /*
-                if(player == 1) {
-                    System.out.println("gBot 0 from p" + player + " is at " + gBot0.botPosition.getX() + "," + gBot0.botPosition.getY());
-                    System.out.println("goal is " + gBot0.botGoal.getX() + "," + gBot0.botGoal.getY());
-                    System.out.println("direction is " + gBot0.direction.getxDir() + "," + gBot0.direction.getyDir());
-                }
-
-                 */
             }
             // if it is at it's goal, give it a new one and reset the atGoal boolean to false
             else{
-                gBot0.setBotGoal(myGameBoard.getBoardField(15,15));
-                gBot0.checkAtGoal();
-                /*
-                System.out.println("gBot 0 from p"
-                        + player
-                        + " was at its goal .......... at "
-                        + gBot0.getBotPosition().getX()
-                        + ","
-                        + gBot0.getBotPosition().getY());
-
-                 */
             }
         }
     }
