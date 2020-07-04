@@ -70,6 +70,8 @@ public abstract class AbstractBot {
         this.botPosition = botPosition;
     }
 
+
+    //method used in NTPlayer class to update gameBoard with bot's position
     public void setBotPosition(GameBoard gameBoard, int xPos, int yPos){
         botPosition = gameBoard.getBoardField(xPos,yPos);
     }
@@ -108,18 +110,14 @@ public abstract class AbstractBot {
         return direction;
     }
 
-    /*
-    public void setDirection(BotDirection direction) {
-        this.direction = direction;
-    }
-
-     */
-
     public void setDirection(GameBoard gameBoard) {
         BoardField[] pathToGoal = createPath(gameBoard);
 
             for(int i = 0; i < pathToGoal.length; i++){
-                if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
+                if(pathToGoal[i] == null){
+
+                }
+                else if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
 
                 }
                 else{
@@ -266,7 +264,8 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
 
             BoardField neighbor = gameBoard.getBoardField((currentField.getX()+i), (currentField.getY() + j));
             if(neighbor.getFieldValue() != 5
-                && neighbor != currentField
+                    //add. condition to eliminate diagonal walking. Must be better set up later.
+                && ((Math.abs(i ) + Math.abs(j) < 2))
                 && neighbor.distanceTo(botPosition) < currentField.distanceTo(botPosition)){
                 neighbors.add(neighbor);
             }

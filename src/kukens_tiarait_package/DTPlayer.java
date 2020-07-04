@@ -15,14 +15,14 @@ public class DTPlayer {
 
         GameBoard myGameBoard = new GameBoard(nC);
         myGameBoard.printBoard();
-        GenericBot gBot0 = new GenericBot(
+        EraserBot eraserBot = new EraserBot(
                 myGameBoard,
                 player,
                 0,
                 myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
         );
 
-        gBot0.setBotGoal(myGameBoard.getBoardField(20,20));
+        eraserBot.setBotGoal(myGameBoard.getBoardField(20,20));
 
         while (nC.isAlive()) {
 
@@ -41,20 +41,18 @@ public class DTPlayer {
                 cc = null;
             }
 
-            gBot0.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
-            gBot0.checkAtGoal();
-            //THIS IS THE EXTRA PRINTING: 6 = x, 7 = o, 8 = S, 9 = G
+            eraserBot.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
+            eraserBot.checkAtGoal();
+
             myGameBoard.printBoard();
 
-            gBot0.setDirection(myGameBoard);
-            // if bot isn't at it's goal, send direction via bots .direction.getxDir, .direction.getyDir
-            if(!gBot0.isAtGoal()){
-                nC.setMoveDirection(0, gBot0.getDirection().getxDir(), gBot0.getDirection().getyDir());
-                gBot0.checkAtGoal();
-                gBot0.setDirection(myGameBoard);
+            if(!eraserBot.isAtGoal()){
+                eraserBot.setDirection(myGameBoard);
+                nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
+                //eraserBot.checkAtGoal();
             }
-            // if it is at it's goal, give it a new one and reset the atGoal boolean to false
             else{
+                eraserBot.setBotGoal(myGameBoard.getBoardField(10,10));
             }
         }
     }

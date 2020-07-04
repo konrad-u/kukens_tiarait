@@ -36,4 +36,26 @@ For the first method, I reference the surrounding boardFields which are not wall
  
 I figured at this point I needed to do some testing before continuing, so I created some test cases within the AbstractBot class and within the DTPlayer class. 
 
-## Step 3: 
+- had to fix the mustBeNeighbor
+- had to adjust how, once the starting position is reached from the goal, the end array which holds the path, is made, and goes from bot position to bot goal
+- 
+
+Once I had the array of neighboring fields which made the definitive path from the bot to the goal, I set up the setDirection method to loop through the array, leaving the current botDirection as long as it hasn't been reached, or setting the intermediate direction via the bot's position and the field it is closest to. 
+In the DTPlayer class, this was tested by setting up an arbitrary static goal, and then once the game loop starts, 
+- updating the gameBoard
+- setting the bot position
+- checking if the bot is at its goal 
+-- if not at goal, you set the direction, move the bot and check
+-- else, set a new goal.
+
+the set new goal was to be left to the  
+
+# Issues
+I need to fix bots to only go diagonal when there aren't any walls around them; bots get hung up on corners. Will come back to this later. This can probably be adjusted in the getNeighbors class. 
+
+I currently fixed this issue, by only allowing vertical and horizonal movement (thus eliminating diagonal stepping), and it seems to work better. Sometimes, some bots still don't move, but when they do they (most of the time) reach both test goals. 
+
+## Step 3: Setting up basic goals
+Once I had realized the pathfinding methods and could observe these working properly (via the setDirection method, and two static goals set in the DTPlayer class), it was time to create the concrete bot classes. 
+
+In the rough form the 
