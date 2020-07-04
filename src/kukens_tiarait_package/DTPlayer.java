@@ -22,12 +22,12 @@ public class DTPlayer {
                 myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
         );
 
-        eraserBot.setBotGoal(myGameBoard.getBoardField(20,20));
+        //eraserBot.setBotGoal(myGameBoard);
 
         while (nC.isAlive()) {
 
-            //nC.setMoveDirection(1, 0.1f, 1.8f);
-            //nC.setMoveDirection(2, -5.1f, -0.8f);
+            nC.setMoveDirection(1, 0.1f, 1.8f);
+            nC.setMoveDirection(2, -5.1f, -0.8f);
 
             ColorChange cc;
             cc = nC.getNextColorChange();
@@ -42,6 +42,9 @@ public class DTPlayer {
             }
 
             eraserBot.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
+            if(eraserBot.getBotGoal() == null){
+                eraserBot.setBotGoal(eraserBot.getBotPosition());
+            }
             eraserBot.checkAtGoal();
 
             myGameBoard.printBoard();
@@ -52,7 +55,7 @@ public class DTPlayer {
                 //eraserBot.checkAtGoal();
             }
             else{
-                eraserBot.setBotGoal(myGameBoard.getBoardField(10,10));
+                eraserBot.setBotGoal(myGameBoard);
             }
         }
     }

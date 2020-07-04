@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public abstract class AbstractBot {
+public class AbstractBot {
 //0 = pyramid on head, eraser 110% speed
 //1 = rectangle, colors 100% speed
 //2 = pyramid, colors 2x 65% speed
@@ -82,6 +82,7 @@ public abstract class AbstractBot {
 
     public void setBotGoal(BoardField botGoal) {
 
+        /*
         switch (botNr){
             case(0):
 
@@ -95,6 +96,8 @@ public abstract class AbstractBot {
 
                 break;
         }
+
+         */
 
 
         this.botGoal = botGoal;
@@ -262,7 +265,9 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
     for (int i = -1; i < 2; i++) {
         for (int j = -1; j < 2; j++) {
 
-            BoardField neighbor = gameBoard.getBoardField((currentField.getX()+i), (currentField.getY() + j));
+            BoardField neighbor = gameBoard.getBoardField((
+                    currentField.getX()+i)
+                    , (currentField.getY() + j));
             if(neighbor.getFieldValue() != 5
                     //add. condition to eliminate diagonal walking. Must be better set up later.
                 && ((Math.abs(i ) + Math.abs(j) < 2))

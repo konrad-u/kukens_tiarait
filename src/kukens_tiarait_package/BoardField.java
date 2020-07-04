@@ -52,4 +52,18 @@ public class BoardField {
         return true;
     }
 
+    public boolean isPlayerPainted(){
+        if(fieldValue > 0 && fieldValue < 5){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEnemyPainted(int ownPlayerNumber){
+        if(isPlayerPainted() && fieldValue != ownPlayerNumber){
+            return true;
+        }
+        return false;
+    }
+
 }
