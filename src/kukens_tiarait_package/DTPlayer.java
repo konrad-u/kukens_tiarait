@@ -15,14 +15,12 @@ public class DTPlayer {
 
         GameBoard myGameBoard = new GameBoard(nC);
         myGameBoard.printBoard();
-        EraserBot eraserBot = new EraserBot(
-                myGameBoard,
-                player,
-                0,
-                myGameBoard.getBoardField((int)nC.getX(player, 0), (int)nC.getY(player, 0))
-        );
-
-        //eraserBot.setBotGoal(myGameBoard);
+            EraserBot eraserBot = new EraserBot(
+                    myGameBoard,
+                    player,
+                    0,
+                    myGameBoard.getBoardField((int) nC.getX(player, 0), (int) nC.getY(player, 0))
+            );
 
         while (nC.isAlive()) {
 
@@ -44,13 +42,18 @@ public class DTPlayer {
             eraserBot.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
 
             if(eraserBot.getBotGoal() == null){
-                eraserBot.setBotGoal(eraserBot.getBotPosition());
+                try {
+                    eraserBot.setBotGoal(myGameBoard);
+                }
+                catch (Exception e){
+                    System.out.println("couldn't set eraserBots goal...");
+                }
             }
             eraserBot.checkAtGoal();
 
 
 
-            myGameBoard.printBoard();
+            //myGameBoard.printBoard();
 
             if(!eraserBot.isAtGoal()){
                 eraserBot.setBotGoal(myGameBoard);

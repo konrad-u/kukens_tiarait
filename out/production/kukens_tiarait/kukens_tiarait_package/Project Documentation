@@ -61,3 +61,5 @@ Once I had realized the pathfinding methods and could observe these working prop
 In the rough form the er
 
 eraser bot goes to closest enemy field by scanning whole board 
+
+- had to remove field setting for visual feedback, as otherwise bots woudn't recognise where sth had been or hadn't 

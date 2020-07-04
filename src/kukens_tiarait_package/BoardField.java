@@ -61,7 +61,7 @@ public class BoardField {
     }
 
     public boolean isEnemyPainted(int ownPlayerNumber){
-        if(isPlayerPainted() && fieldValue != ownPlayerNumber){
+        if(isPlayerPainted() && (fieldValue-1) != ownPlayerNumber){
             return true;
         }
         return false;
