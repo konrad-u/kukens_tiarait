@@ -37,10 +37,7 @@ public class GameBoard {
         for(int i = 31; i >= 0; i--) {
             for (int j = 0; j < 32; j++) {
                 System.out.print(" ");
-                if(boardFields[j][i].getFieldValue() == 5) {
-                    System.out.print('*');
-                }
-                else if(boardFields[j][i].getFieldValue() == 0){
+                if(boardFields[j][i].getFieldValue() == 0){
                     System.out.print(" ");
                 }
                 //along totally explored fields
@@ -53,13 +50,16 @@ public class GameBoard {
                 }
                 //botPosition
                 else if(boardFields[j][i].getFieldValue() == 8){
-                    System.out.print("P");
+                    System.out.print("S");
                 }
                 //botGoal
                 else if(boardFields[j][i].getFieldValue() == 9){
                     System.out.print("G");
                 }
-                else{
+                else if(boardFields[j][i].getFieldValue() == 5) {
+                    System.out.print('*');
+                }
+                else {
                     System.out.print(boardFields[j][i].getFieldValue());
                 }
                 System.out.print(" ");

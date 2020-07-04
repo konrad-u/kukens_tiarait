@@ -336,9 +336,11 @@ public abstract class AbstractBot {
             int lowestDistance = 999;
             for(BoardField bf : allFieldsToPath.keySet()){
                 if(allFieldsToPath.get(bf).intValue() == (i)){
-                    if(bf.distanceTo(botPosition) < lowestDistance){
+                    if(bf.distanceTo(botPosition) < lowestDistance
+                            && bf.isNeighbor(shortestPath[shortestPath.length - i])){
+                        System.out.println("the field " + bf.getX() + "," + bf.getY() + " was determined best.");
                         shortestPath[shortestPath.length - (i+1)] = bf;
-                        lowestDistance = bf.distanceTo(botGoal);
+                        lowestDistance = bf.distanceTo(botPosition);
                     }
                     else{
                         inferiorSteps.add(bf);
@@ -364,14 +366,6 @@ public abstract class AbstractBot {
         botPosition.setFieldValue(8);
         botGoal.setFieldValue(9);
     return allFieldsToPath;
-    }
-
-
-    public boolean isNeighbor(BoardField fieldA, BoardField fieldB){
-        if (fieldA.distanceTo(fieldB) < 2){
-            return true;
-        }
-        return false;
     }
 
 public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField currentField, HashMap pathSoFar){

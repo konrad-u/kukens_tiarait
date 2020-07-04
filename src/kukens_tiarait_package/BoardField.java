@@ -45,4 +45,11 @@ public class BoardField {
         return distance;
     }
 
+    public boolean isNeighbor(BoardField otherBoardField){
+        if (Math.abs(getX() - otherBoardField.getX()) > 1 || Math.abs(getY() - otherBoardField.getY()) > 1 ){
+            return false;
+        }
+        return true;
+    }
+
 }
