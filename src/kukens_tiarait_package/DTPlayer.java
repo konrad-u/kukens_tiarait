@@ -28,8 +28,6 @@ public class DTPlayer {
         gBot0.setBotGoal(myGameBoard.getBoardField(15,15));
         gBot0.createPath(myGameBoard);
 
-
-
         while (nC.isAlive()) {
 
             //testing for pathfinding
@@ -63,7 +61,9 @@ public class DTPlayer {
 
             gBot0.setBotPosition(myGameBoard, (int)nC.getX(player, 0), (int)nC.getY(player,0));
             gBot0.checkAtGoal();
-            //myGameBoard.printBoard();
+            //THIS IS THE EXTRA PRINTING USING FIELDVALUE 6 TO MAKE x's
+            myGameBoard.printBoard();
+
             // if bot isn't at it's goal, send direction via bots .direction.getxDir, .direction.getyDir
             if(!gBot0.isAtGoal()){
                 nC.setMoveDirection(0, gBot0.getDirection().getxDir(), gBot0.getDirection().getyDir());

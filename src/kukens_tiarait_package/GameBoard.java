@@ -43,6 +43,22 @@ public class GameBoard {
                 else if(boardFields[j][i].getFieldValue() == 0){
                     System.out.print(" ");
                 }
+                //along totally explored fields
+                else if(boardFields[j][i].getFieldValue() == 6){
+                    System.out.print("x");
+                }
+                //along final path
+                else if(boardFields[j][i].getFieldValue() == 7){
+                    System.out.print("O");
+                }
+                //botPosition
+                else if(boardFields[j][i].getFieldValue() == 8){
+                    System.out.print("P");
+                }
+                //botGoal
+                else if(boardFields[j][i].getFieldValue() == 9){
+                    System.out.print("G");
+                }
                 else{
                     System.out.print(boardFields[j][i].getFieldValue());
                 }
