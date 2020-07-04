@@ -31,5 +31,9 @@ The setBotGoal would need to be a BFS method searching around each bot for accep
 I chose to start with the simple pathfinding algorithm listed on the wikipedia page https://en.wikipedia.org/wiki/Pathfinding which essentially tracks the way from a goal to the starting point over all neighbors, extending the information of a BoardField with a counter integer, and, once the starting point has been reached, following the path of lowest counters to the goal. 
 To do this I created an additional class (BoardFieldPlusCounter) which would hold, additionally to the BoardField it references, an int field pathLengthCounter, as well as some comparison methods for comparing instances of itself against each other. 
 
-I created then two methods for first listing all neighboring boardFields as potential options, and second for creating the path from the goal to that botPosition. 
-I figured at this point I needed to do some testing before continuing, so I created some test cases. 
+I created then two methods for first listing all neighboring boardFields as potential options, and second for creating the path from the goal to that botPosition.
+For the first method, I reference the surrounding boardFields which are not walls, not the field itself, and are not further away from the goal as the boardField itself. THese were implemented via methods added
+ 
+I figured at this point I needed to do some testing before continuing, so I created some test cases within the AbstractBot class and within the DTPlayer class. 
+
+## Step 3: 

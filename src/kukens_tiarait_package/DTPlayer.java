@@ -23,34 +23,9 @@ public class DTPlayer {
         );
 
         gBot0.setBotGoal(myGameBoard.getBoardField(20,20));
-        //gBot0.createPath(myGameBoard);
-
-        /*
-        System.out.println("..............testing pathfinding methods, gBot0 goal set to "
-                + gBot0.getBotGoal().getX()
-                + ","
-                + gBot0.getBotGoal().getY());
-        System.out.println("gBot0 is at "
-                + gBot0.getBotPosition().getX()
-                + ","
-                + gBot0.getBotPosition().getY());
-        myGameBoard.printBoard();
-
-         */
 
         while (nC.isAlive()) {
 
-            /*
-            float x = nC.getX(player, botNr);
-            float y = nC.getY(player, botNr);
-
-            nC.isWall(7, 11); //true when at coordinate 7,11 there is a blocker (e.g. wall)
-
-            nC.setMoveDirection(0, 0.5f, -0.5f);
-
-            printPositions(player, nC);
-
-             */
             //nC.setMoveDirection(1, 0.1f, 1.8f);
             //nC.setMoveDirection(2, -5.1f, -0.8f);
 
