@@ -34,6 +34,7 @@ public class BigPainterBot extends AbstractBot{
             }
             setDirection(gameBoard);
     }
+    
 
     public BoardField[] getcornerPoints(GameBoard gameBoard){
         BoardField[] cornerPoints = new BoardField[4];
