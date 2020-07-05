@@ -127,7 +127,8 @@ public class AbstractBot {
      */
 
     public void checkAtGoal(){
-        if(botPosition.equals(botGoal)){
+        //if(botPosition.equals(botGoal)){
+        if(botPosition.distanceTo(botGoal) < 2){
             atGoal = true;
         }
         else{

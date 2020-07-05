@@ -117,47 +117,50 @@ public class DTPlayer extends Thread{
                 eraserBot.setBotGoal(myGameBoard);
             }
 
-            try {
-                System.out.println("trying to set eraserBots direction...");
-                eraserBot.setDirection(myGameBoard);
-                System.out.println("eraserBots direction was set to " + eraserBot.getDirection().getxDir() + "," + eraserBot.getDirection().getyDir());
-            }
-            catch (Exception e){
-                System.out.println("couldn't set eraserBots direction");
-            }
-            nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
+            //else {
+                try {
+                    System.out.println("trying to set eraserBots direction...");
+                    eraserBot.setDirection(myGameBoard);
+                    System.out.println("eraserBots direction was set to " + eraserBot.getDirection().getxDir() + "," + eraserBot.getDirection().getyDir());
+                } catch (Exception e) {
+                    System.out.println("couldn't set eraserBots direction");
+                }
+                nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
+            //}
 
 
             painterBot.checkAtGoal();
             if(painterBot.isAtGoal()) {
                 painterBot.setBotGoal(myGameBoard);
             }
-            //painterBot.setBotGoal(myGameBoard);
-            try {
-                System.out.println("trying to set painterBots direction...");
-                painterBot.setDirection(myGameBoard);
-                System.out.println("painterBots direction was set to " + painterBot.getDirection().getxDir() + "," + painterBot.getDirection().getyDir());
-            }
-            catch (Exception e){
-                System.out.println("couldn't set painterBots direction");
-            }
-            nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
+            //else {
+                //painterBot.setBotGoal(myGameBoard);
+                try {
+                    System.out.println("trying to set painterBots direction...");
+                    painterBot.setDirection(myGameBoard);
+                    System.out.println("painterBots direction was set to " + painterBot.getDirection().getxDir() + "," + painterBot.getDirection().getyDir());
+                } catch (Exception e) {
+                    System.out.println("couldn't set painterBots direction");
+                }
+                nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
+            //}
 
 
             bigPainterBot.checkAtGoal();
             if(bigPainterBot.isAtGoal()) {
                 bigPainterBot.setBotGoal(myGameBoard);
             }
-            //bigPainterBot.setBotGoal(myGameBoard);
-            try {
-                System.out.println("trying to set bigPainterBots direction...");
-                bigPainterBot.setDirection(myGameBoard);
-                System.out.println("bigPainterBots direction was set to " + bigPainterBot.getDirection().getxDir() + "," + bigPainterBot.getDirection().getyDir());
-            }
-            catch (Exception e){
-                System.out.println("couldn't set bigPainterBots direction");
-            }
-            nC.setMoveDirection(2, bigPainterBot.getDirection().getxDir(), bigPainterBot.getDirection().getyDir());
+            //else {
+                //bigPainterBot.setBotGoal(myGameBoard);
+                try {
+                    System.out.println("trying to set bigPainterBots direction...");
+                    bigPainterBot.setDirection(myGameBoard);
+                    System.out.println("bigPainterBots direction was set to " + bigPainterBot.getDirection().getxDir() + "," + bigPainterBot.getDirection().getyDir());
+                } catch (Exception e) {
+                    System.out.println("couldn't set bigPainterBots direction");
+                }
+                nC.setMoveDirection(2, bigPainterBot.getDirection().getxDir(), bigPainterBot.getDirection().getyDir());
+            //}
         }
     }
 
