@@ -40,7 +40,7 @@ public class BoardField {
         return false;
     }
 
-    public int distanceTo(BoardField otherBoardField){
+    public float distanceTo(BoardField otherBoardField){
         int distance = Math.abs(getX() - otherBoardField.getX())+ Math.abs(getY() - otherBoardField.getY());
         return distance;
     }

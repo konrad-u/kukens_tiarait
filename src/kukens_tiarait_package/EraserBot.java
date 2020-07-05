@@ -43,7 +43,7 @@ public class EraserBot extends AbstractBot {
     @Override
     public void setBotGoal(GameBoard gameBoard) {
 
-        int lowestDistance = 999;
+        float lowestDistance = 999;
         BoardField closestEnemyField = null;
 
         //1. scan whole board for all enemy fields, adding to the allEnemyFields arraylist
@@ -56,7 +56,7 @@ public class EraserBot extends AbstractBot {
                 if(bf.isEnemyPainted(getPlayerNumber())){
                     //System.out.println("My getPlayerNumber is " + getPlayerNumber());
                     //System.out.println("the enemy fieldValue is " + (bf.getFieldValue()-1));
-                    int distanceToEnemyField = getBotPosition().distanceTo(bf);
+                    float distanceToEnemyField = getBotPosition().distanceTo(bf);
 
                     if(distanceToEnemyField < lowestDistance){
                         lowestDistance = distanceToEnemyField;
@@ -67,7 +67,8 @@ public class EraserBot extends AbstractBot {
             }
         }
         if(closestEnemyField == null){
-           setBotGoal(getBotPosition());
+            BoardField randomGoal = gameBoard.getBoardField(getBotPosition().getX()-1, getBotPosition().getY()-1);
+           setBotGoal(randomGoal);
         }
         else {
             setBotGoal(closestEnemyField);

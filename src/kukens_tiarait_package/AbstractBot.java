@@ -166,6 +166,7 @@ public class AbstractBot {
 
     }
 
+
     public BoardField[] createPath(GameBoard gameBoard){
 
         HashMap<BoardField, Integer> allFieldsToPath = new HashMap<BoardField, Integer>();
@@ -174,28 +175,33 @@ public class AbstractBot {
     allFieldsToPath.put(botGoal, 0);
 
     //PART 1: searching until our ArrayList contains the starting point
-    while(!allFieldsToPath.containsKey(botPosition)){
-        bNeighborhood.clear();
-        int maxValueInPath = 0;
-        for(BoardField b : allFieldsToPath.keySet()){
-            ArrayList<BoardField> bNeighbors = getNeighbors(gameBoard, b, allFieldsToPath);
+        if(!allFieldsToPath.containsKey(botPosition)) {
+            while (!allFieldsToPath.containsKey(botPosition)) {
+                bNeighborhood.clear();
+                int maxValueInPath = 0;
+                for (BoardField b : allFieldsToPath.keySet()) {
+                    ArrayList<BoardField> bNeighbors = getNeighbors(gameBoard, b, allFieldsToPath);
 
-            for(BoardField bN : bNeighbors){
-                if(!bN.equals(b) && bN.distanceTo(botPosition) <= b.distanceTo(botPosition)){
-                    bNeighborhood.add(bN);
+                    for (BoardField bN : bNeighbors) {
+                        if (!bN.equals(b) && bN.distanceTo(botPosition) <= b.distanceTo(botPosition)) {
+                            bNeighborhood.add(bN);
+                        }
+                    }
                 }
-            }
-        }
-        maxValueInPath = Collections.max(allFieldsToPath.values());
-        for(BoardField bN : bNeighborhood){
-            if(!allFieldsToPath.containsKey(bN)){
-                allFieldsToPath.put(bN, maxValueInPath +1);
-            }
-        }
+                maxValueInPath = Collections.max(allFieldsToPath.values());
+                for (BoardField bN : bNeighborhood) {
+                    if (!allFieldsToPath.containsKey(bN)) {
+                        allFieldsToPath.put(bN, maxValueInPath + 1);
+                    }
+                }
+        /*
         for(BoardField b : allFieldsToPath.keySet()){
-            //gameBoard.getBoardField(b.getX(), b.getY()).setFieldValue(6);
+            gameBoard.getBoardField(b.getX(), b.getY()).setFieldValue(6);
         }
-    }
+
+         */
+            }
+        }
 
     //PART 2: setting up the straight path between botPosition and botGoal
         int maxSteps = Collections.max(allFieldsToPath.values());
@@ -209,7 +215,7 @@ public class AbstractBot {
 
         for(int i = 1; i < maxSteps; i++){
             ArrayList<BoardField> inferiorSteps = new ArrayList<>();
-            int lowestDistance = 999;
+            float lowestDistance = 999;
             for(BoardField bf : allFieldsToPath.keySet()){
                 if(allFieldsToPath.get(bf).intValue() == (i)){
                     if(bf.distanceTo(botPosition) < lowestDistance
@@ -222,9 +228,12 @@ public class AbstractBot {
                     }
                 }
             }
+            /*
             for(BoardField inferiorStep : inferiorSteps){
                 allFieldsToPath.remove(inferiorStep);
             }
+
+             */
         }
 
         System.out.print("The absolute path goes ");

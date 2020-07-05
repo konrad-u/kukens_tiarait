@@ -5,7 +5,13 @@ import lenz.htw.tiarait.net.NetworkClient;
 
 import java.io.IOException;
 
-public class DTPlayer {
+public class DTPlayer extends Thread{
+
+    public void run(){
+
+
+
+    }
 
     public static void main(String [] args) throws IOException {
 
@@ -72,10 +78,6 @@ public class DTPlayer {
             //myGameBoard.printBoard();
 
             eraserBot.setBotGoal(myGameBoard);
-
-            //System.out.println("eraserBots pos is: " + eraserBot.getBotPosition().getX() + "," + eraserBot.getBotPosition().getY());
-            //System.out.println("eraserBots goal is: " + eraserBot.getBotGoal().getX() + "," + eraserBot.getBotGoal().getY());
-            if(!eraserBot.isAtGoal()){
                 try {
                     System.out.println("trying to set eraserBots direction...");
                     eraserBot.setDirection(myGameBoard);
@@ -84,24 +86,10 @@ public class DTPlayer {
                 catch (Exception e){
                     System.out.println("couldn't set eraserBots direction");
                 }
-                try {
-                    System.out.println("trying to set networkClient bot 0 direction...");
                     nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
-                }
-                catch (Exception e){
-                    System.out.println("couldn't set the networkClient eraserBots direction");
-                }
-                //eraserBot.checkAtGoal();
-            }
-            else{
-                eraserBot.setBotGoal(myGameBoard);
-            }
+
 
             painterBot.setBotGoal(myGameBoard);
-
-            //System.out.println("painterBots pos is: " + painterBot.getBotPosition().getX() + "," + painterBot.getBotPosition().getY());
-            //System.out.println("painterBots goal is: " + eraserBot.getBotGoal().getX() + "," + eraserBot.getBotGoal().getY());
-            if(!painterBot.isAtGoal()){
                 try {
                     System.out.println("trying to set painterBots direction...");
                     painterBot.setDirection(myGameBoard);
@@ -110,18 +98,7 @@ public class DTPlayer {
                 catch (Exception e){
                     System.out.println("couldn't set painterBots direction");
                 }
-                try {
-                    System.out.println("trying to set networkClient bot 1 direction...");
                     nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
-                }
-                catch (Exception e){
-                    System.out.println("couldn't set the networkClient painterBots direction");
-                }
-                //eraserBot.checkAtGoal();
-            }
-            else{
-                painterBot.setBotGoal(myGameBoard);
-            }
         }
     }
     
