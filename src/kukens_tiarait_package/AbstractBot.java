@@ -174,7 +174,7 @@ public class AbstractBot {
     allFieldsToPath.put(botGoal, 0);
 
     //PART 1: searching until our ArrayList contains the starting point
-    while(!allFieldsToPath.containsKey(botPosition) && allFieldsToPath.size() < 100){
+    while(!allFieldsToPath.containsKey(botPosition)){
         bNeighborhood.clear();
         int maxValueInPath = 0;
         for(BoardField b : allFieldsToPath.keySet()){
@@ -258,6 +258,7 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
             if(neighbor.getFieldValue() != 5
                     //add. condition to eliminate diagonal walking. Must be better set up later.
                 && ((Math.abs(i ) + Math.abs(j) < 2))
+                //&& currentField.getFieldValue() != playerNumber
                 && neighbor.distanceTo(botPosition) < currentField.distanceTo(botPosition)){
                 neighbors.add(neighbor);
             }

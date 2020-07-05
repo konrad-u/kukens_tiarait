@@ -13,10 +13,8 @@ public class PainterBot extends AbstractBot {
 
     @Override
     public void setBotGoal(GameBoard gameBoard){
-
         setBotGoal(getHighestScoringEnemyPainterBotPosition(gameBoard, nC));
-
-
+        System.out.println("painterBots goal was set.");
     }
 
     public BoardField getHighestScoringEnemyPainterBotPosition(GameBoard gameBoard, NetworkClient nC){
@@ -40,6 +38,7 @@ public class PainterBot extends AbstractBot {
             highestEnemyPainterBot = gameBoard.getBoardField((int) nC.getX(highestEnemy, 1), (int) nC.getY(highestEnemy, 1));
         }
         catch(Exception e){
+            System.out.println("couldn't find a highest enemy painterBot");
             highestEnemyPainterBot = gameBoard.getBoardField(15,15);
         }
         return highestEnemyPainterBot;
