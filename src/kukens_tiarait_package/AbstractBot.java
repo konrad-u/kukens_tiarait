@@ -85,12 +85,12 @@ public class AbstractBot {
     }
 
     //updates goal based on the current gameBoard
-    /*
+
     public void setBotGoal(GameBoard gameBoard){
 
     }
 
-     */
+
 
 
     public BotDirection getDirection() {
