@@ -33,6 +33,7 @@ public class AbstractBot {
     private BoardField botGoal;
     private BotDirection direction;
     private boolean atGoal;
+    private ArrayList<BoardField> visitedPath;
 
 
     public AbstractBot(GameBoard gameBoard, int playerNumber, int botNr, BoardField botPosition){
@@ -42,6 +43,7 @@ public class AbstractBot {
         //setBotGoal(gameBoard);
         //direction = new BotDirection(botPosition, botGoal);
         atGoal = false;
+        visitedPath = new ArrayList<>();
     }
 
     //----------------BASIC SETTERS AND GETTERS-----------------------
@@ -90,8 +92,13 @@ public class AbstractBot {
 
     }
 
+    public ArrayList<BoardField> getVisitedPath() {
+        return visitedPath;
+    }
 
-
+    public void setVisitedPath(ArrayList<BoardField> visitedPath) {
+        this.visitedPath = visitedPath;
+    }
 
     public BotDirection getDirection() {
         return direction;
@@ -104,10 +111,11 @@ public class AbstractBot {
                 if(pathToGoal[i] == null){
 
                 }
-                else if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
+                //else if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
+                else if(visitedPath.contains(pathToGoal[i])){
 
                 }
-                else{
+                else if(!visitedPath.contains(pathToGoal[i])){
                     this.direction = new BotDirection(botPosition, pathToGoal[i]);
                     break;
                 }
@@ -240,6 +248,7 @@ public class AbstractBot {
              */
         }
 
+        /*
         System.out.print("The absolute path goes ");
         for(int j = 0; j < shortestPath.length; j++){
             if(shortestPath[j] != null) {
@@ -251,6 +260,8 @@ public class AbstractBot {
             }
         }
         System.out.println();
+
+         */
 
         //botPosition.setFieldValue(8);
         //botGoal.setFieldValue(9);
@@ -292,8 +303,9 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
                         , (currentField.getY() + j));
                 if(neighbor.getFieldValue() != 5
                         //add. condition to eliminate diagonal walking. Must be better set up later.
-                        && ((Math.abs(i ) + Math.abs(j) < 2))){
-                        //&& currentField.getFieldValue() != playerNumber){
+                        && ((Math.abs(i ) + Math.abs(j) < 2))
+                        //&& (neighbor.getFieldValue()-1 != playerNumber)
+                ) {
                     neighbors.add(neighbor);
                 }
             }

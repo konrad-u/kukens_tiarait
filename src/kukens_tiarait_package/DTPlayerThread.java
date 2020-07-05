@@ -45,7 +45,6 @@ public class DTPlayerThread extends Thread{
                 break;
         }
 
-
     }
 
     public void run() {
@@ -61,22 +60,29 @@ public class DTPlayerThread extends Thread{
 
         while (nC.isAlive()) {
 
+
             ColorChange cc;
             cc = nC.getNextColorChange();
 
             while (cc != null) {
+                /*
                 System.out.println("a color change happened at "
                         + cc.x + ","
                         + cc.y + " by player "
                         + cc.newColor);
+
+                 */
                 myGameBoard.updateBoard(cc);
                 cc = null;
             }
 
+            /*
             for (int i = 0; i < myGameBoard.getPlayerScores().length; i++) {
                 System.out.println("p" + "score " + myGameBoard.getPlayerScores()[i]);
             }
             System.out.println();
+
+             */
 
 
             threadBot.setBotPosition(myGameBoard, (int) nC.getX(player, botNumber), (int) nC.getY(player, botNumber));
@@ -84,20 +90,40 @@ public class DTPlayerThread extends Thread{
 
             threadBot.checkAtGoal();
             if (threadBot.isAtGoal()) {
+                threadBot.getVisitedPath().clear();
                 threadBot.setBotGoal(myGameBoard);
             }
 
             //else {
             try {
-                if(botNumber!=0)
+                if(botNumber == 9) {
                     System.out.println("trying to set bot " + botNumber + " direction");
+                }
+
+                threadBot.getVisitedPath().add(threadBot.getBotPosition());
                 threadBot.setDirection(myGameBoard);
-                System.out.println("bot " + botNumber + " direction was set to " + threadBot.getDirection().getxDir() + "," + threadBot.getDirection().getyDir());
+
+                if(botNumber == 9) {
+                    System.out.println("bot "
+                            + botNumber
+                            + " direction was set to "
+                            + threadBot.getDirection().getxDir()
+                            + ","
+                            + threadBot.getDirection().getyDir());
+                }
+
+
             } catch (Exception e) {
-                System.out.println("couldn't set bot " + botNumber + " direction");
+                    System.out.println("couldn't set bot " + botNumber + " direction");
+                threadBot.setBotGoal(myGameBoard);
+                System.out.println("a new goal was set to "
+                        + threadBot.getBotGoal().getX()
+                        + ","
+                        + threadBot.getBotGoal().getY());
             }
             nC.setMoveDirection(botNumber, threadBot.getDirection().getxDir(), threadBot.getDirection().getyDir());
-            //}
-        }
+            }
+            myGameBoard.printBoard();
+        // }
     }
         }

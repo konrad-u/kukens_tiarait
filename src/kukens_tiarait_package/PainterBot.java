@@ -14,7 +14,6 @@ public class PainterBot extends AbstractBot {
     //@Override
     public void setBotGoal(GameBoard gameBoard){
         setBotGoal(getHighestScoringEnemyPainterBotPosition(gameBoard, nC));
-        System.out.println("painterBots goal was set.");
     }
 
     public BoardField getHighestScoringEnemyPainterBotPosition(GameBoard gameBoard, NetworkClient nC){
