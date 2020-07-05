@@ -39,7 +39,7 @@ public class AbstractBot {
         this.playerNumber = playerNumber;
         this.botNr = botNr;
         this.botPosition = botPosition;
-        setBotGoal(gameBoard);
+        //setBotGoal(gameBoard);
         //direction = new BotDirection(botPosition, botGoal);
         atGoal = false;
     }
@@ -85,9 +85,12 @@ public class AbstractBot {
     }
 
     //updates goal based on the current gameBoard
+    /*
     public void setBotGoal(GameBoard gameBoard){
 
     }
+
+     */
 
 
     public BotDirection getDirection() {
@@ -275,4 +278,25 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
     }
       return neighbors;
 }
+
+    public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField currentField){
+
+        ArrayList<BoardField> neighbors = new ArrayList<>();
+
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+
+                BoardField neighbor = gameBoard.getBoardField((
+                                currentField.getX()+i)
+                        , (currentField.getY() + j));
+                if(neighbor.getFieldValue() != 5
+                        //add. condition to eliminate diagonal walking. Must be better set up later.
+                        && ((Math.abs(i ) + Math.abs(j) < 2))){
+                        //&& currentField.getFieldValue() != playerNumber){
+                    neighbors.add(neighbor);
+                }
+            }
+        }
+        return neighbors;
+    }
 }

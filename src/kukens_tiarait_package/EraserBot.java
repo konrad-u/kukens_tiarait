@@ -40,7 +40,7 @@ public class EraserBot extends AbstractBot {
     Preference weighting can later be implemented to consider running over other enemy fields, and avoiding own fields (TBI)
      */
 
-    @Override
+    //@Override
     public void setBotGoal(GameBoard gameBoard) {
 
         float lowestDistance = 999;
