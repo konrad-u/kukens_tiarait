@@ -65,8 +65,11 @@ public class DTPlayer {
 
             //myGameBoard.printBoard();
 
+            eraserBot.setBotGoal(myGameBoard);
+            System.out.println("eraserBots gameboard position is: " + eraserBot.getBotPosition().getX() + "," + eraserBot.getBotPosition().getY());
+            System.out.println("eraserBots actual position is: " + nC.getX(player, 0)+ "," + nC.getY(player, 0));
+            System.out.println("eraserBots goal is: " + eraserBot.getBotGoal().getX() + "," + eraserBot.getBotGoal().getY());
             if(!eraserBot.isAtGoal()){
-                eraserBot.setBotGoal(myGameBoard);
                 try {
                     eraserBot.setDirection(myGameBoard);
                 }
@@ -76,12 +79,12 @@ public class DTPlayer {
                 nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
                 //eraserBot.checkAtGoal();
             }
-            else{
-                eraserBot.setBotGoal(myGameBoard);
-            }
 
+            painterBot.setBotGoal(myGameBoard);
+            System.out.println("painterBots gameboard position is: " + painterBot.getBotPosition().getX() + "," + painterBot.getBotPosition().getY());
+            System.out.println("painterBots actual position is: " + nC.getX(player, 1)+ "," + nC.getY(player, 1));
+            System.out.println("painterBots goal is: " + eraserBot.getBotGoal().getX() + "," + eraserBot.getBotGoal().getY());
             if(!painterBot.isAtGoal()){
-                painterBot.setBotGoal(myGameBoard);
                 try {
                     painterBot.setDirection(myGameBoard);
                 }
@@ -90,9 +93,6 @@ public class DTPlayer {
                 }
                 nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
                 //eraserBot.checkAtGoal();
-            }
-            else{
-                painterBot.setBotGoal(myGameBoard);
             }
         }
     }

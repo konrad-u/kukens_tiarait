@@ -237,6 +237,7 @@ public class AbstractBot {
                 System.out.println("...");
             }
         }
+        System.out.println();
 
         //botPosition.setFieldValue(8);
         //botGoal.setFieldValue(9);
@@ -256,7 +257,7 @@ public ArrayList<BoardField> getNeighbors(GameBoard gameBoard, BoardField curren
                     , (currentField.getY() + j));
             if(neighbor.getFieldValue() != 5
                     //add. condition to eliminate diagonal walking. Must be better set up later.
-                //&& ((Math.abs(i ) + Math.abs(j) < 2))
+                && ((Math.abs(i ) + Math.abs(j) < 2))
                 && neighbor.distanceTo(botPosition) < currentField.distanceTo(botPosition)){
                 neighbors.add(neighbor);
             }
