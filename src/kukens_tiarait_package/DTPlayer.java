@@ -41,6 +41,47 @@ public class DTPlayer extends Thread{
                 myGameBoard.getBoardField((int) nC.getX(player, 0), (int) nC.getY(player, 0))
         );
 
+
+
+
+
+
+        if(eraserBot.getBotGoal() == null){
+            try {
+                eraserBot.setBotGoal(myGameBoard.getBoardField(15,15));
+            }
+            catch (Exception e){
+                System.out.println("couldn't set eraserBots goal...");
+            }
+        }
+        eraserBot.checkAtGoal();
+
+        if(painterBot.getBotGoal() == null){
+            try {
+                painterBot.setBotGoal(myGameBoard.getBoardField(15,15));
+            }
+            catch (Exception e){
+                System.out.println("couldn't set painterBots goal...");
+            }
+        }
+
+        painterBot.checkAtGoal();
+
+        if(bigPainterBot.getBotGoal() == null){
+            try {
+                bigPainterBot.setBotGoal(myGameBoard.getBoardField(15,15));
+            }
+            catch (Exception e){
+                System.out.println("couldn't set painterBots goal...");
+            }
+        }
+
+        bigPainterBot.checkAtGoal();
+
+
+
+
+
         while (nC.isAlive()) {
 
             for(int i = 0; i < myGameBoard.getPlayerScores().length; i++){
@@ -71,41 +112,10 @@ public class DTPlayer extends Thread{
 
 
 
-            if(eraserBot.getBotGoal() == null){
-                try {
-                    eraserBot.setBotGoal(myGameBoard);
-                }
-                catch (Exception e){
-                    System.out.println("couldn't set eraserBots goal...");
-                }
-            }
             eraserBot.checkAtGoal();
-
-            if(painterBot.getBotGoal() == null){
-                try {
-                    painterBot.setBotGoal(myGameBoard);
-                }
-                catch (Exception e){
-                    System.out.println("couldn't set painterBots goal...");
-                }
+            if(eraserBot.isAtGoal()) {
+                eraserBot.setBotGoal(myGameBoard);
             }
-
-            painterBot.checkAtGoal();
-
-            if(bigPainterBot.getBotGoal() == null){
-                try {
-                    bigPainterBot.setBotGoal(myGameBoard);
-                }
-                catch (Exception e){
-                    System.out.println("couldn't set painterBots goal...");
-                }
-            }
-
-            bigPainterBot.checkAtGoal();
-
-            //myGameBoard.printBoard();
-
-            eraserBot.setBotGoal(myGameBoard);
 
             try {
                 System.out.println("trying to set eraserBots direction...");
@@ -118,7 +128,11 @@ public class DTPlayer extends Thread{
             nC.setMoveDirection(0, eraserBot.getDirection().getxDir(), eraserBot.getDirection().getyDir());
 
 
-            painterBot.setBotGoal(myGameBoard);
+            painterBot.checkAtGoal();
+            if(painterBot.isAtGoal()) {
+                painterBot.setBotGoal(myGameBoard);
+            }
+            //painterBot.setBotGoal(myGameBoard);
             try {
                 System.out.println("trying to set painterBots direction...");
                 painterBot.setDirection(myGameBoard);
@@ -130,7 +144,11 @@ public class DTPlayer extends Thread{
             nC.setMoveDirection(1, painterBot.getDirection().getxDir(), painterBot.getDirection().getyDir());
 
 
-            bigPainterBot.setBotGoal(myGameBoard);
+            bigPainterBot.checkAtGoal();
+            if(bigPainterBot.isAtGoal()) {
+                bigPainterBot.setBotGoal(myGameBoard);
+            }
+            //bigPainterBot.setBotGoal(myGameBoard);
             try {
                 System.out.println("trying to set bigPainterBots direction...");
                 bigPainterBot.setDirection(myGameBoard);
