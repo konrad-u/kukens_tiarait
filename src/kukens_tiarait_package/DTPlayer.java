@@ -70,6 +70,7 @@ public class DTPlayer extends Thread{
             bigPainterBot.setBotPosition(myGameBoard, (int)nC.getX(player, 2), (int)nC.getY(player,2));
 
 
+
             if(eraserBot.getBotGoal() == null){
                 try {
                     eraserBot.setBotGoal(myGameBoard);
