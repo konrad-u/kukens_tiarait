@@ -4,13 +4,13 @@ import lenz.htw.tiarait.ColorChange;
 import lenz.htw.tiarait.net.NetworkClient;
 
 public class DTPlayerThread extends Thread{
-    
+
     AbstractBot threadBot;
     NetworkClient nC;
     int player;
     int botNumber;
     GameBoard myGameBoard;
-    
+
 
     public DTPlayerThread(NetworkClient nC, int player, int botNumber, GameBoard myGameBoard){
         this.nC = nC;
@@ -27,13 +27,13 @@ public class DTPlayerThread extends Thread{
                         myGameBoard.getBoardField((int) nC.getX(player, botNumber), (int) nC.getY(player, botNumber))
                 );
                 break;
-                case(1):
-            threadBot = new PainterBot(
-                    myGameBoard,
-                    player,
-                    botNumber,
-                    myGameBoard.getBoardField((int) nC.getX(player, botNumber), (int) nC.getY(player, botNumber)),nC
-            );
+            case(1):
+                threadBot = new PainterBot(
+                        myGameBoard,
+                        player,
+                        botNumber,
+                        myGameBoard.getBoardField((int) nC.getX(player, botNumber), (int) nC.getY(player, botNumber)),nC
+                );
                 break;
             case(2):
                 threadBot = new BigPainterBot(
@@ -44,7 +44,6 @@ public class DTPlayerThread extends Thread{
                 );
                 break;
         }
-
     }
 
     public void run() {
@@ -60,7 +59,6 @@ public class DTPlayerThread extends Thread{
 
         while (nC.isAlive()) {
 
-
             ColorChange cc;
             cc = nC.getNextColorChange();
 
@@ -75,7 +73,6 @@ public class DTPlayerThread extends Thread{
                 myGameBoard.updateBoard(cc);
                 cc = null;
             }
-
             /*
             for (int i = 0; i < myGameBoard.getPlayerScores().length; i++) {
                 System.out.println("p" + "score " + myGameBoard.getPlayerScores()[i]);
@@ -84,17 +81,13 @@ public class DTPlayerThread extends Thread{
 
              */
 
-
             threadBot.setBotPosition(myGameBoard, (int) nC.getX(player, botNumber), (int) nC.getY(player, botNumber));
-
 
             threadBot.checkAtGoal();
             if (threadBot.isAtGoal()) {
                 threadBot.getVisitedPath().clear();
                 threadBot.setBotGoal(myGameBoard);
             }
-
-            //else {
             try {
                 if(botNumber == 9) {
                     System.out.println("trying to set bot " + botNumber + " direction");
@@ -111,10 +104,8 @@ public class DTPlayerThread extends Thread{
                             + ","
                             + threadBot.getDirection().getyDir());
                 }
-
-
             } catch (Exception e) {
-                    System.out.println("couldn't set bot " + botNumber + " direction");
+                System.out.println("couldn't set bot " + botNumber + " direction");
                 threadBot.setBotGoal(myGameBoard);
                 System.out.println("a new goal was set to "
                         + threadBot.getBotGoal().getX()
@@ -122,8 +113,7 @@ public class DTPlayerThread extends Thread{
                         + threadBot.getBotGoal().getY());
             }
             nC.setMoveDirection(botNumber, threadBot.getDirection().getxDir(), threadBot.getDirection().getyDir());
-            }
-            myGameBoard.printBoard();
-        // }
-    }
         }
+        if(player == 1 && botNumber == 1) myGameBoard.printBoard();
+    }
+}

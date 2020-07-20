@@ -111,11 +111,11 @@ public class AbstractBot {
                 if(pathToGoal[i] == null){
 
                 }
-                //else if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
-                else if(visitedPath.contains(pathToGoal[i])){
+                else if(botPosition.distanceTo(botGoal) < pathToGoal[i].distanceTo(botGoal)){
+                //else if(visitedPath.contains(pathToGoal[i])){
 
                 }
-                else if(!visitedPath.contains(pathToGoal[i])){
+                else {
                     this.direction = new BotDirection(botPosition, pathToGoal[i]);
                     break;
                 }
